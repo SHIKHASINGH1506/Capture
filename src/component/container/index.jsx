@@ -2,7 +2,7 @@ import { Menubar, Suggestions } from 'component';
 
 const Container = ({ children }) => {
   return (
-    <div className='feed-wrapper flex mt-6 sm:flex-col'>
+    <div className='sm:w-full sm:m-auto sm:mt-4 flex mt-6 sm:flex-col'>
       <Menubar />
         {children} 
       <Suggestions />
