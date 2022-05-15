@@ -2,15 +2,14 @@ import "./App.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Navbar, Container } from 'component';
-import { Login, Signup, Home } from 'features';
-import { useSelector } from 'react-redux';
+import { Login, Signup } from 'features';
+import { Home } from 'views';
 import { ProtectedRoute } from "routes/ProtectedRoute";
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  const token = useSelector(state => state.auth.token);
   return (
-    <div className='container'>
+    <div className='max-w-screen-xl m-auto'>
       <ToastContainer
         style={{ top: "4.5rem", right: "0" }}
         position="top-right"
