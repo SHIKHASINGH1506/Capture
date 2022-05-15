@@ -13,7 +13,7 @@ export const Login = () => {
   const [loginCreds, setLoginCreds] = useState(initialFormState);
   console.log(token);
   const testLoginCreds = {
-    username: 'shikhasingh@gmail.com',
+    username: 'shikhasingh',
     password: 'shikhasingh123'
   };
 
@@ -47,7 +47,7 @@ export const Login = () => {
           <div className='mb-4'>
             <label className='block py-2 text-sm' htmlFor="userName">Email</label>
             <input
-              className='w-full form-input bodrer-input focus:border-purple-900'
+              className='auth-input'
               type="text"
               id="userName"
               placeholder="johndoe@gmail.com"
@@ -60,7 +60,7 @@ export const Login = () => {
           <div className='mb-4'>
             <label className='block py-2 text-sm' htmlFor="pwd">Password</label>
             <input
-              className="w-full form-input bodrer-input focus:border-purple-900"
+              className="auth-input"
               type="password"
               id="pwd"
               placeholder="Password"
