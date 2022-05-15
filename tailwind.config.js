@@ -1,6 +1,7 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {
       screens: {
@@ -19,12 +20,13 @@ module.exports = {
         'sm': { max: "640px" },
       },
       colors:{
-        'off-purple-gray' : '#eee9f5'
+        'base-purple': '#eee9f5',
+        'off-purple-gray' : '#eee9f5',
+        'dark-slate-gray': 'rgb(55 65 81)',
+        'transparent-black': 'rgba(0,0,0,.662)',
+        'light-gray1':'#d0d0d0'
       }
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 }
