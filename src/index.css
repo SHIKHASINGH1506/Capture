@@ -20,6 +20,9 @@
     .btn-disabled{
         @apply bg-gray-400;
     }
+    .icon-hover{
+        @apply text-gray-500 transition-all ease-in ease-out;
+    }
 }
 @layer components{
     .btn-primary {
@@ -34,4 +37,5 @@
     .auth-input{
         @apply w-full form-input border border-solid border-light-gray1 focus:border-purple-900;
     }
+
 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllPostService, addPostService} from 'service';
+import { getAllPostService, addPostService, editPostService, deletePostService} from 'service';
 
 const initialState = {
   posts: [],
@@ -11,8 +11,34 @@ export const addPost = createAsyncThunk(
   'post/addPost',
   async (postData, {RejectWithValue})  => {
     try{
-      console.log(postData);
       const {data} = await addPostService(postData);
+      return data.posts;
+    }catch(err){
+      console.log(err.message);
+      return RejectWithValue(err.message);
+    }
+  }
+)
+
+export const editPost = createAsyncThunk(
+  'post/editPost',
+  async (postData, {RejectWithValue})  => {
+    try{
+      console.log(postData);
+      const {data} = await editPostService(postData?._id, postData);
+      return data.posts;
+    }catch(err){
+      console.log(err.message);
+      return RejectWithValue(err.message);
+    }
+  }
+)
+
+export const deletePost = createAsyncThunk(
+  'post/deletePost',
+  async (postId, {RejectWithValue})  => {
+    try{
+      const {data} = await deletePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.message);
@@ -25,7 +51,6 @@ export const getAllPosts = createAsyncThunk(
   'post/getAllPosts',
   async (token='gdhs', {RejectWithValue}) => {
     try{
-      console.log('here');
       const{data} = await getAllPostService();
       return data.posts;
     }catch(err){
@@ -45,10 +70,8 @@ const postSlice = createSlice({
       state.postLoading = true;
     })
     builder.addCase(getAllPosts.fulfilled, (state, {payload}) => {
-      console.log(payload);
       state.postLoading = false;
       state.posts = payload;
-      console.log(state.posts);
     })
     builder.addCase(getAllPosts.rejected, (state) => {
       state.postLoading = false;
@@ -65,6 +88,29 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postError = 'Error in adding post';
     })
+    builder.addCase(editPost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(editPost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(editPost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in adding post';
+    })
+    builder.addCase(deletePost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(deletePost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(deletePost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in adding post';
+    })
+    
   }
 })
 

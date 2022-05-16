@@ -4,7 +4,7 @@ import { login, signup } from 'service';
 const initialState = {
   token: localStorage.getItem('token') || null,
   isLoggedIn: false,
-  user: null,
+  user: localStorage.getItem('user') || null,
   authLoading: false,
   authError: null
 }
@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk(
     try{
       const {data} = await login(loginCreds);
       localStorage.setItem('token', data.encodedToken);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('user', data.foundUser.username);
       localStorage.setItem('isLoggedIn', true);
       return data;
     }catch(err){
@@ -93,6 +93,6 @@ const authSlice = createSlice({
     })
   }
 });
-
+export const authState = (state) => state.auth;
 export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

@@ -11,4 +11,14 @@ const addPostService =  async (postData) => {
   return await axios.post('/api/posts', {postData: postData}, {headers: {authorization: token}});
 }
 
-export {addPostService, getAllPostService}
+const editPostService = async (postId, postData) => {
+  const token = localStorage.getItem('token');
+  return await axios.post(`/api/posts/edit/${postId}`, {postData: postData}, {headers: {authorization: token}});
+}
+
+const deletePostService = async (postId) => {
+  const token = localStorage.getItem('token');
+  return await axios.delete(`/api/posts/${postId}`, {headers: {authorization: token}});
+}
+
+export {addPostService, getAllPostService, editPostService, deletePostService}

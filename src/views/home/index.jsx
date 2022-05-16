@@ -2,12 +2,13 @@
 import { PostForm, getPostState } from 'features';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getAllPosts } from 'features';
+import { getAllPosts, authState } from 'features';
 import { PostCard } from 'features/post/components';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector(getPostState);
+  const { user } = useSelector(authState);
 
   useEffect(() => {
     (async () => {
@@ -30,7 +31,12 @@ const Home = () => {
         <PostForm />
         {posts?.length > 0 && 
           posts.map(
-            (post) => <PostCard key={post._id} post={post}/>
+            (post) => {return (
+              post.username === user
+                ? <PostCard key={post._id} post={post} dialogOption={true}/>
+                : <PostCard key={post._id} post={post} />
+            )}
+            // <PostCard key={post._id} post={post}/>
           )
         }
       </div>

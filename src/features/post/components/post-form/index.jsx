@@ -1,37 +1,60 @@
 import logo from 'assets/logo2.png';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addPost } from 'features';
-import { useToast} from 'custom-hooks/useToast';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost, editPost, deletePost, postModalState, closePostModal, setEditPostData } from 'features';
+import { useToast } from 'custom-hooks/useToast';
 
-const PostForm = ({modalVisibilityHandler}) => {
+const PostForm = ({ modal }) => {
   const dispatch = useDispatch();
+  const { isPostModalOpen, postToEdit } = useSelector(postModalState);
   const { showToast } = useToast();
 
   const initialPostFields = {
     content: '',
   }
-  const [postData, setPostData] = useState(initialPostFields);
-  const {content} = postData;
+
+  const isEditPost = !modal
+    ? false
+    : Object.keys(postToEdit).length > 0
+      ? true
+      : false
+
+  const [postData, setPostData] = useState(isEditPost ? postToEdit : initialPostFields);
+  const { content } = postData;
 
   const addPostHandler = async (e) => {
     e.preventDefault();
-      try{
+    if(!isEditPost){
+      try {
         const response = await dispatch(addPost(postData));
-        if(response?.error)
+        if (response?.error)
           throw new Error('Error in adding post');
         showToast('Post added successfully', 'success');
         setPostData(initialPostFields);
-        modalVisibilityHandler(false);
-      }catch(err){
+        dispatch(closePostModal(false));
+      } catch (err) {
         showToast('Error in adding post', 'error');
         console.log(err.message);
       }
+    }else{
+      try{
+        const response = await dispatch(editPost(postData));
+        if (response?.error)
+          throw new Error('Error in updating post'); 
+        showToast('Post edited successfully', 'success');
+        setPostData(initialPostFields);
+        dispatch(closePostModal(false));
+        dispatch(setEditPostData({}));
+      }catch(err){
+        showToast('Error in editing post', 'error');
+        console.log(err.message);
+      }
   }
+}
 
   const setPostFieldHandler = (e) => {
     e.stopPropagation();
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setPostData({
       ...postData,
       [name]: value
@@ -45,20 +68,20 @@ const PostForm = ({modalVisibilityHandler}) => {
           <img className='' src={logo} alt="" />
         </div>
         <form className='flex flex-col w-full gap-2.5' onSubmit={addPostHandler}>
-          <textarea className='resize-none overflow-hidden h-16 md:h-16 px-4 py-2 focus:outline-none border-none' 
-            name="content" 
-            id="" 
+          <textarea className='resize-none overflow-y-auto h-24 md:h-16 px-4 py-2 focus:outline-none border-none'
+            name="content"
+            id=""
             value={content}
             onChange={setPostFieldHandler}
             placeholder="What's happening with you ?" ></textarea>
           <div className='flex justify-between'>
-            <div className="icons flex">
+            {/* <div className="icons flex">
               <button className='p-2 mx-2'><i className="fa-solid fa-image"></i></button>
               <button className='p-2 mx-2'><i className="fa-solid fa-face-smile"></i></button>
-            </div>
-            <button 
+            </div> */}
+            <button
               type='submit'
-              className='disabled:btn-disabled btn-primary'
+              className='disabled:btn-disabled btn-primary ml-auto'
               disabled={isPostContentNull}
             >Post</button>
           </div>
@@ -68,4 +91,4 @@ const PostForm = ({modalVisibilityHandler}) => {
   )
 }
 
-export { PostForm };
+export { PostForm }

@@ -11,7 +11,6 @@ function App() {
   return (
     <div className='max-w-screen-xl m-auto'>
       <ToastContainer
-        style={{ top: "4.5rem", right: "0" }}
         position="top-right"
         autoClose={2000}
         hideProgressBar={false}
