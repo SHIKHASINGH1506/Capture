@@ -1,13 +1,29 @@
-import { openPostModal, setEditPostData } from 'features';
+import { openPostModal, setEditPostData, deletePost } from 'features';
 import { useDispatch } from 'react-redux';
+import {useToast} from 'custom-hooks/useToast'
 
 export const PostMoreModal = ({postData, optionHandler}) => {
   const dispatch = useDispatch();
+  const {showToast} = useToast();
 
   const openEditModal = () => {
     dispatch(openPostModal(true));
     dispatch(setEditPostData(postData));
     optionHandler();
+  }
+
+  const deleteHandler = async () => {
+    try{
+    const response = await dispatch(deletePost(postData._id));
+    if(response?.error)
+      throw new Error('Error in deleting post');
+    optionHandler();
+    showToast('Post Deleted', 'success');
+    }
+    catch(err){
+      console.log(err.message);
+      showToast('Post Deletion Failed', 'error');
+    }
   }
 
   return (
@@ -18,7 +34,8 @@ export const PostMoreModal = ({postData, optionHandler}) => {
         <i className="fa-solid fa-pen-to-square"></i>
         Edit
       </button>
-      <button className='flex items-center gap-2 py-2 px-3 hover:bg-white rounded-full'>
+      <button className='flex items-center gap-2 py-2 px-3 hover:bg-white rounded-full'
+        onClick={deleteHandler}>
         <i className="fa-solid fa-trash"></i>
         Delete
       </button>

@@ -36,7 +36,7 @@ export const editPost = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
   'post/deletePost',
-  async (postData, {RejectWithValue})  => {
+  async (postId, {RejectWithValue})  => {
     try{
       const {data} = await deletePostService(postId);
       return data.posts;
@@ -96,6 +96,17 @@ const postSlice = createSlice({
       state.posts = payload;
     })
     builder.addCase(editPost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in adding post';
+    })
+    builder.addCase(deletePost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(deletePost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(deletePost.rejected, (state) => {
       state.postLoading = false;
       state.postError = 'Error in adding post';
     })

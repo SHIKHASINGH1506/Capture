@@ -11,7 +11,6 @@ export const Login = () => {
     username: "",
     password:""}
   const [loginCreds, setLoginCreds] = useState(initialFormState);
-  console.log(token);
   const testLoginCreds = {
     username: 'shikhasingh',
     password: 'shikhasingh123'

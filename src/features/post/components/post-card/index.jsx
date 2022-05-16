@@ -1,8 +1,7 @@
 import { useState } from "react"
 import {PostMoreModal} from 'component';
-import { postModalState} from 'features';
 
-export const PostCard = ({post}) => {
+export const PostCard = ({post, dialogOption}) => {
   const [postOptionModal, setPostOtionModal] = useState(false);
 
   const {_id, title, fullname, username, content, author, createdAt, updatedAt, comments} = post;
@@ -30,9 +29,9 @@ export const PostCard = ({post}) => {
               <button className='hover:icon-hover p-2 mx-2'><i className="text-lg fa-solid fa-heart"></i></button>
               <button className='hover:icon-hover p-2 mx-2'><i className="text-lg fa-solid fa-bookmark"></i></button>
               <button className='hover:icon-hover p-2 mx-2'><i className="text-lg fa-solid fa-message"></i></button>
-              <button className='hover:icon-hover p-2 mx-2'
+              {dialogOption && <button className='hover:icon-hover p-2 mx-2'
                 onClick={optionHandler}><i className="text-lg fa-solid fa-ellipsis-vertical"></i>
-              </button>
+              </button>}
               {postOptionModal && <PostMoreModal postData={post} optionHandler={optionHandler}/>}
             </div>
           </div>
