@@ -17,7 +17,6 @@ const postModalSlice = createSlice({
       state.postToEdit={};
     },
     setEditPostData: (state, action) => {
-      console.log(action.payload);
       state.postToEdit = action.payload;
     }
   }
