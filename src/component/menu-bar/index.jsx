@@ -1,14 +1,15 @@
 import './menu-bar.css';
 import logo from 'assets/logo2.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'features';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import { PostModal } from 'features/index';
+import { postModalState, openPostModal } from 'features';
 import { useState } from 'react';
 
 export const Menubar = () => {
   const dispatch = useDispatch();
+  const {isPostModalOpen} = useSelector(postModalState);
   const [newPostModal, setNewPostModal] = useState(false);
 
   const logoutHandler = () => {
@@ -80,7 +81,7 @@ export const Menubar = () => {
         </ul>
         <div className="w-full sm:hidden">
           <button className='my-6 w-full py-2.5 rounded-full text-white bg-purple-700 hover:bg-purple-600'
-          onClick={() => setNewPostModal(true)}>Add Post</button>
+          onClick={() => dispatch(openPostModal(true))}>Add Post</button>
         </div>
       </div>
     </aside>
@@ -89,7 +90,6 @@ export const Menubar = () => {
       {mapMenuItems()}
       </ul>
     </footer>
-    {newPostModal && <PostModal modalVisibilityHandler={modalVisibilityHandler}/>}
     </>  
   )
 }
