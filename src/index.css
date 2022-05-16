@@ -1,12 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Nunito:wght@200;400&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Heebo:wght@400;500;600&family=Noto+Sans&family=Nunito:ital,wght@0,300;1,300&family=Playfair+Display:wght@700;800&family=Poppins:wght@200;300;400&family=Public+Sans:wght@200&display=swap");
 
-@layer components  {
-    .btn-primary{
-        @apply bg-purple-900 text-white px-5 py-1.5 rounded-full hover:bg-purple-600;
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer base{
+    body{
+        font-family: "Roboto", sans-serif;
+        box-sizing: border-box;
+        background:#eee9f5;
+        color: rgb(55 65 81);
     }
-    .form-input{
+    .logo-text {
+        font-family: "Allerta Stencil", sans-serif;
+    }
+}
+@layer utilities{
+    .btn-disabled{
+        @apply bg-gray-400;
+    }
+}
+@layer components{
+    .btn-primary {
+        @apply bg-purple-700 text-white px-5 py-1.5 rounded-full hover:bg-purple-600 transition-all ease-in ease-out;
+    }
+    .form-input {
         @apply py-2 px-3 focus:outline-none;
+    }
+    .list-none{
+        @apply list-none;
+    }
+    .auth-input{
+        @apply w-full form-input border border-solid border-light-gray1 focus:border-purple-900;
     }
 }

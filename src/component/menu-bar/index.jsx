@@ -4,9 +4,13 @@ import { useDispatch } from 'react-redux';
 import { logout } from 'features';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import { PostModal } from 'features/index';
+import { useState } from 'react';
 
 export const Menubar = () => {
   const dispatch = useDispatch();
+  const [newPostModal, setNewPostModal] = useState(false);
+
   const logoutHandler = () => {
     dispatch(logout());
   }
@@ -51,9 +55,13 @@ export const Menubar = () => {
       )
     })
 
+  const modalVisibilityHandler = (modalState) => {
+    setNewPostModal(modalState);
+  }
+
   return (
     <>
-    <aside className='menu px-5 mr-6 flex flex-col justify-between'>
+    <aside className='menu px-5 flex flex-col justify-between'>
       <div className='flex flex-col items-start sticky top-0'>
         <div>
           <div className="flex items-start cursor-pointer p-3 sm:hidden">
@@ -71,15 +79,17 @@ export const Menubar = () => {
           </div>
         </ul>
         <div className="w-full sm:hidden">
-          <button className='my-6 desktop-btn w-full py-2.5 rounded-full text-white bg-purple-900 hover:bg-purple-600'>Add Post</button>
+          <button className='my-6 w-full py-2.5 rounded-full text-white bg-purple-700 hover:bg-purple-600'
+          onClick={() => setNewPostModal(true)}>Add Post</button>
         </div>
       </div>
     </aside>
-    <footer className='hidden menu px-5 mr-6 flex flex-col justify-between sm:block sm:fixed sm:bottom-0 sm:left-0 sm:w-full'>
+    <footer className='hidden bg-white menu px-5 mr-6 flex flex-col justify-between sm:block sm:fixed sm:bottom-0 sm:left-0 sm:w-full'>
       <ul className='menu-icons sm:flex sm:justify-around sm:w-full'>
       {mapMenuItems()}
       </ul>
     </footer>
+    {newPostModal && <PostModal modalVisibilityHandler={modalVisibilityHandler}/>}
     </>  
   )
 }
