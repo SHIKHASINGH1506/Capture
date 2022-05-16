@@ -9,7 +9,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector(getPostState);
   const { user } = useSelector(authState);
-
+  
   useEffect(() => {
     (async () => {
       try{
@@ -32,7 +32,7 @@ const Home = () => {
         {posts?.length > 0 && 
           posts.map(
             (post) => {return (
-              post.username === user
+              post.username === user?.username
                 ? <PostCard key={post._id} post={post} dialogOption={true}/>
                 : <PostCard key={post._id} post={post} />
             )}
