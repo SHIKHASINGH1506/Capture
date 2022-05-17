@@ -7,3 +7,4 @@ export {
   likePostService,
   dislikePostService
 } from './post';
+export {getAllBookmarksService, addBookmarkService, removeBookmarkService} from './bookmark';
