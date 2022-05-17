@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, ThunkAPI } from "@reduxjs/toolkit";
-import { login, signup } from 'service';
+import { login, signup, updateUserService } from 'service';
 
 const initialState = {
   token: localStorage.getItem('token') || null,
   isLoggedIn: false,
   user: JSON.parse(localStorage.getItem('user')) || null,
   authLoading: false,
+  userLoading: false,
   authError: null
 }
 
@@ -34,6 +35,18 @@ export const signupUser = createAsyncThunk(
     }
   }
 )
+export const updateUser = createAsyncThunk(
+  'auth/updateUser',
+  async ({token, profileData}, {rejectWithValue}) => {
+    try{
+      const {data} = await updateUserService(token, {userData:profileData});
+      return data;
+    }catch(error){
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -76,6 +89,16 @@ const authSlice = createSlice({
     builder.addCase(loginUser.rejected, (state) => {
         state.authLoading= false,
         state.authError= 'Login Failed'
+    })
+    builder.addCase(updateUser.pending, (state) => {
+      state.userLoading= true
+    })
+    builder.addCase(updateUser.fulfilled, (state, {payload}) => {
+      state.userLoading = false,
+      state.user = payload.user
+    })
+    builder.addCase(updateUser.rejected, (state) => {
+        state.userLoading= false
     })
   }
 });

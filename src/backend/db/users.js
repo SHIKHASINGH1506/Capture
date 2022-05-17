@@ -14,5 +14,8 @@ export const users = [
     password: "shikhasingh123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "Founder, CEO and creator of @Appwrite , the 100% open source alternative for Firebase",
+    link: "https://shikha.netlify.app/",
+    country: 'India'
   },
 ];

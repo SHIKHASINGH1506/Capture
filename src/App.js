@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Navbar, Container } from 'component';
 import { Login, Signup } from 'features';
-import { Home, Bookmark } from 'views';
+import { Home, Bookmark, UserProfile } from 'views';
 import { ProtectedRoute } from "routes/ProtectedRoute";
 import { Route, Routes } from 'react-router-dom';
 
@@ -28,15 +28,23 @@ function App() {
             <Container>
               <Home/>
             </Container>
-          </ProtectedRoute>
-        }></Route>
+          </ProtectedRoute>}>
+        </Route>
          <Route path='/bookmark' element={
           <ProtectedRoute>
             <Container>
               <Bookmark/>
             </Container>
-          </ProtectedRoute>
-        }></Route>
+          </ProtectedRoute>}>
+        </Route>
+        <Route path='/profile' element={
+          <ProtectedRoute>
+            <Container>
+              <UserProfile/>
+            </Container>
+          </ProtectedRoute>}>
+        </Route>
+
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Routes>
