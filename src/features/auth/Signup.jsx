@@ -10,7 +10,8 @@ const Signup = () => {
   const {showToast} = useToast();
   const navigate = useNavigate();
   const initialSignupFields = {
-    fullName: '',
+    firstName: '',
+    lastName:'',
     username: '',
     password: '',
     confirmPassword: ''
@@ -42,6 +43,7 @@ const validatePasswordHandler = ({target:{name, value}}) =>{
 const signupFormHandler = async (e, signupFields) =>{
   e.preventDefault();
   try{
+    console.log(signupFields);
     const response = await dispatch(signupUser(signupFields));
     if(response?.error){
       if(response.payload.includes('422'))
@@ -65,25 +67,38 @@ const signupFormHandler = async (e, signupFields) =>{
           <h3 className='text-center uppercase px-4 py-5 font-bold text-2xl'>Sign up</h3>
           <p className='text-center'>Enter email and password</p>
           <div className='mb-4'>
-            <label className='block py-2 text-sm' htmlFor="fullName">Full Name</label>
+            <label className='block py-2 text-sm' htmlFor="firstName">First Name</label>
             <input
               className='w-full form-input bodrer-input focus:border-purple-900'
               type="text"
-              id="fullName"
-              placeholder="john doe"
-              name="fullName"
-              value={signupFields.fullName}
+              id="firstName"
+              placeholder="John"
+              name="firstName"
+              value={signupFields.firstname}
               onChange={(e) => fieldChangeHandler(e)}
               required
             />
           </div>
           <div className='mb-4'>
-            <label className='block py-2 text-sm' htmlFor="userName">Email</label>
+            <label className='block py-2 text-sm' htmlFor="lastName">Last Name</label>
+            <input
+              className='w-full form-input bodrer-input focus:border-purple-900'
+              type="text"
+              id="lastName"
+              placeholder="Doe"
+              name="lastName"
+              value={signupFields.lastname}
+              onChange={(e) => fieldChangeHandler(e)}
+              required
+            />
+          </div>
+          <div className='mb-4'>
+            <label className='block py-2 text-sm' htmlFor="userName">User Name</label>
             <input
               className="w-full form-input bodrer-input focus:border-purple-900"
               type="text"
               id="userName"
-              placeholder="johndoe@gmail.com"
+              placeholder="johndoe15"
               name="username"
               value={signupFields.username}
               onChange={(e) => fieldChangeHandler(e)}

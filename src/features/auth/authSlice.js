@@ -4,7 +4,7 @@ import { login, signup } from 'service';
 const initialState = {
   token: localStorage.getItem('token') || null,
   isLoggedIn: false,
-  user: localStorage.getItem('user') || null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
   authLoading: false,
   authError: null
 }
@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk(
     try{
       const {data} = await login(loginCreds);
       localStorage.setItem('token', data.encodedToken);
-      localStorage.setItem('user', data.foundUser.username);
+      localStorage.setItem('user', JSON.stringify(data.foundUser));
       localStorage.setItem('isLoggedIn', true);
       return data;
     }catch(err){
@@ -44,52 +44,38 @@ const authSlice = createSlice({
       state.user = null;
       state.authLoading = false;
       state.authError = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('isLoggedIn');
     }
   },
   extraReducers: (builder) => {
     builder.addCase(signupUser.pending, (state) => {
-      return{
-        ...state,
-        authLoading: true
-      }
+        state.authLoading= true
     })
     builder.addCase(signupUser.fulfilled, (state, {payload}) => {
-      return{
-        ...state,
-        authLoading: false,
-        token: payload.encodedToken,
-        user: payload.user,
-        isLoggedIn: true
-      }
+        state.authLoading=  false,
+        state.token= payload.encodedToken,
+        state.user= payload.user,
+        state.isLoggedIn= true
     })
     builder.addCase(signupUser.rejected, (state) => {
-      return{
-        ...state,
-        authLoading: false,
-        authError: 'Error in signing up user'
-      }
+        state.authLoading = false,
+        state.authError = 'Error in signing up user'
     })
     builder.addCase(loginUser.pending, (state) => {
-    return{ 
-      ...state,
-      authLoading: true,
-    }
+      state.authLoading= true
     })
     builder.addCase(loginUser.fulfilled, (state, {payload}) => {
-    return {
-      ...state,
-      authLoading: false,
-      token: payload.encodedToken,
-      user: payload.user,
-      isLoggedIn: true
-    };
+      state.authLoading = false,
+      state.token = payload.encodedToken,
+      state.user = payload.foundUser,
+      state.isLoggedIn = true,
+      state.authError = null
     })
     builder.addCase(loginUser.rejected, (state) => {
-      return{
-        ...state,
-        authLoading: false,
-        authError: 'Login Failed'
-      }
+        state.authLoading= false,
+        state.authError= 'Login Failed'
     })
   }
 });

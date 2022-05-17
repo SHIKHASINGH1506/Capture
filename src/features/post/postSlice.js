@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllPostService, addPostService, editPostService, deletePostService} from 'service';
+import { 
+  getAllPostService, 
+  addPostService, 
+  editPostService, 
+  deletePostService,
+  likePostService, 
+  dislikePostService
+} from 'service';
 
 const initialState = {
   posts: [],
@@ -24,7 +31,6 @@ export const editPost = createAsyncThunk(
   'post/editPost',
   async (postData, {RejectWithValue})  => {
     try{
-      console.log(postData);
       const {data} = await editPostService(postData?._id, postData);
       return data.posts;
     }catch(err){
@@ -60,6 +66,32 @@ export const getAllPosts = createAsyncThunk(
   }
 )
 
+export const likePost = createAsyncThunk(
+  'post/likePost',
+  async (postId, {RejectWithValue}) => {
+    try{
+      const{data} = await likePostService(postId);
+      return data.posts;
+    }catch(err){
+      console.log(err.response.data);
+      return RejectWithValue(err.message);
+    }
+  }
+)
+
+export const dislikePost = createAsyncThunk(
+  'post/dislikePost',
+  async (postId, {RejectWithValue}) => {
+    try{
+      const{data} = await dislikePostService(postId);
+      return data.posts;
+    }catch(err){
+      console.log(err.response.data);
+      return RejectWithValue(err.message);
+    }
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState,
@@ -75,7 +107,7 @@ const postSlice = createSlice({
     })
     builder.addCase(getAllPosts.rejected, (state) => {
       state.postLoading = false;
-      state.postError = 'Error in adding post';
+      state.postError = 'Error in get all posts';
     })
     builder.addCase(addPost.pending, (state) => {
       state.postLoading = true;
@@ -97,7 +129,7 @@ const postSlice = createSlice({
     })
     builder.addCase(editPost.rejected, (state) => {
       state.postLoading = false;
-      state.postError = 'Error in adding post';
+      state.postError = 'Error in editing post';
     })
     builder.addCase(deletePost.pending, (state) => {
       state.postLoading = true;
@@ -108,12 +140,33 @@ const postSlice = createSlice({
     })
     builder.addCase(deletePost.rejected, (state) => {
       state.postLoading = false;
-      state.postError = 'Error in adding post';
+      state.postError = 'Error in deleting post';
+    })
+    builder.addCase(likePost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(likePost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(likePost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in liking post';
+    })
+    builder.addCase(dislikePost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(dislikePost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(dislikePost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in disliking post';
     })
     
   }
 })
 
-// export const { } = postSlice.actions;
 export const getPostState = (state) => state.post; 
 export const postReducer = postSlice.reducer;
