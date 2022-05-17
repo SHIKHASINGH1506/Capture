@@ -26,7 +26,6 @@ const Home = () => {
   []);
   
   return (
-    <>
       <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
         <PostForm />
         {posts?.length > 0 && 
@@ -36,11 +35,9 @@ const Home = () => {
                 ? <PostCard key={post._id} post={post} dialogOption={true}/>
                 : <PostCard key={post._id} post={post} />
             )}
-            // <PostCard key={post._id} post={post}/>
           )
         }
       </div>
-    </>
   )
 }
 export { Home }

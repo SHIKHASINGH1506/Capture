@@ -5,13 +5,17 @@ import {
   editPostService, 
   deletePostService,
   likePostService, 
-  dislikePostService
+  dislikePostService,
+  getAllBookmarksService, 
+  addBookmarkService, 
+  removeBookmarkService
 } from 'service';
 
 const initialState = {
   posts: [],
   postLoading: false,
   postError: null,
+  bookmarks: []
 }
 
 export const addPost = createAsyncThunk(
@@ -92,6 +96,43 @@ export const dislikePost = createAsyncThunk(
   }
 )
 
+export const bookmarkPost = createAsyncThunk(
+  'post/bookmarkPost',
+  async (postId, {RejectWithValue}) => {
+    try{
+      const{data} = await addBookmarkService(postId);
+      return data.bookmarks;
+    }catch(err){
+      console.log(err.response.data);
+      return RejectWithValue(err.message);
+    }
+  }
+);
+export const removePostFromBookmark = createAsyncThunk(
+  'post/removePostFromBookmark',
+  async (postId, {RejectWithValue}) => {
+    try{
+      const{data} = await removeBookmarkService(postId);
+      return data.bookmarks;
+    }catch(err){
+      console.log(err.response.data);
+      return RejectWithValue(err.message);
+    }
+  }
+);
+export const getAllBookmarkPosts = createAsyncThunk(
+  'post/getAllBookmarkPosts',
+  async (postId, {RejectWithValue}) => {
+    try{
+      const{data} = await getAllBookmarksService();
+      return data.bookmarks;
+    }catch(err){
+      console.log(err.response.data);
+      return RejectWithValue(err.message);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: 'post',
   initialState,
@@ -164,6 +205,40 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postError = 'Error in disliking post';
     })
+    builder.addCase(bookmarkPost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(bookmarkPost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.bookmarks = payload;
+    })
+    builder.addCase(bookmarkPost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in add post to bookmark';
+    })
+    builder.addCase(removePostFromBookmark.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(removePostFromBookmark.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.bookmarks = payload;
+    })
+    builder.addCase(removePostFromBookmark.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in remove post from bookmark';
+    })
+    builder.addCase(getAllBookmarkPosts.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(getAllBookmarkPosts.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.bookmarks = payload;
+    })
+    builder.addCase(getAllBookmarkPosts.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in get bookmark post';
+    })
+    
     
   }
 })

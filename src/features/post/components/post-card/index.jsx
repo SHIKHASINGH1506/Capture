@@ -1,20 +1,29 @@
 import { useState } from "react"
-import { PostMoreModal} from 'component';
-import { authState, likePost, dislikePost } from 'features';
+import { PostMoreModal } from 'component';
+import { useLoading } from 'custom-hooks/useLoading';
+import { authState, getPostState, likePost, dislikePost, bookmarkPost, removePostFromBookmark } from 'features';
 import { useDispatch, useSelector } from "react-redux";
 
-export const PostCard = ({post, dialogOption}) => {
+export const PostCard = ({ post, dialogOption }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(authState);
-  const [postOptionModal, setPostOtionModal] = useState(false);
+  const { bookmarks } = useSelector(getPostState);
+  const { 
+    loadingState: { 
+      likeLoading, 
+      bookmarkLoading 
+    }, 
+  loadingStateHandler } = useLoading();
 
+  const [postOptionModal, setPostOtionModal] = useState(false);
   const {
-    fullname, 
-    username, 
+    _id,
+    fullname,
+    username,
     content,
-    likes:{likedBy, dislikedBy, likeCount},
+    likes: { likedBy, likeCount }
   } = post;
-  console.log(post);
+
   const optionHandler = () => {
     setPostOtionModal(prevState => !prevState);
   }
@@ -23,27 +32,53 @@ export const PostCard = ({post, dialogOption}) => {
     return likedBy.find(currentUser => currentUser.username === user.username) ? true : false
   }
 
+  const isPostBookmarkedByUser = () => {
+    return bookmarks.find(postId => postId === _id) ? true : false
+  }
+
   const likeIcon = isPostLikedByUser() ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+  const bookmarkIcon = isPostBookmarkedByUser() ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
 
   const likeHandler = async () => {
-    try{
+    try {
+      loadingStateHandler('likeLoading', true);
       const response = isPostLikedByUser()
         ? await dispatch(dislikePost(post._id))
         : await dispatch(likePost(post._id))
-      if(response?.error){
+      if (response?.error) {
         throw new Error(
           isPostLikedByUser()
             ? 'Error in dislike post'
-            :  'Error in like post'
-        )    
+            : 'Error in like post'
+        )
       }
-      }catch(error){
-        console.log(error.message);
-      }
+      loadingStateHandler('likeLoading', false);
+    } catch (error) {
+      console.log(error.message);
     }
+  }
 
-    return (
-      <>
+  const bookmarkHandler = async () => {
+    try {
+      loadingStateHandler('bookmarkLoading', true);
+      const response = isPostBookmarkedByUser()
+        ? await dispatch(removePostFromBookmark(post._id))
+        : await dispatch(bookmarkPost(post._id))
+      if (response?.error) {
+        throw new Error(
+          isPostBookmarkedByUser()
+            ? 'Error in removing post from bookmark'
+            : 'Error in adding post to bookmark'
+        )
+      }
+      loadingStateHandler('bookmarkLoading', false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  return (
+    <>
       <div className='flex flex-col w-full bg-white'>
         <div className='flex p-5 gap-4'>
           <div className='h-12 w-12 shrink-0'>
@@ -60,21 +95,27 @@ export const PostCard = ({post, dialogOption}) => {
               {content}
             </div>
             <div className='flex justify-between relative'>
-              <button className='flex items-center gap-2 hover:icon-hover p-2 mx-2'
+              <button 
+                className='flex items-center gap-2 hover:icon-hover p-2 mx-2'
+                disabled={likeLoading}
                 onClick={likeHandler}>
                 <i className={`text-lg ${likeIcon}`}></i>
-                {likeCount > 0 ? `${likeCount} Like` : ''}
+                {likeCount > 0 ? likeCount : ''}
               </button>
-              <button className='hover:icon-hover p-2 mx-2'><i className="text-lg fa-regular fa-bookmark"></i></button>
+              <button 
+                className='hover:icon-hover p-2 mx-2'
+                disabled={bookmarkLoading}
+                onClick={bookmarkHandler}>
+                <i className={`text-lg ${bookmarkIcon}`}></i></button>
               <button className='hover:icon-hover p-2 mx-2'><i className="text-lg fa-regular fa-comment"></i></button>
               {dialogOption && <button className='hover:icon-hover p-2 mx-2'
                 onClick={optionHandler}><i className="text-lg fa-solid fa-ellipsis-vertical"></i>
               </button>}
-              {postOptionModal && <PostMoreModal postData={post} optionHandler={optionHandler}/>}
+              {postOptionModal && <PostMoreModal postData={post} optionHandler={optionHandler} />}
             </div>
           </div>
         </div>
       </div>
-      </>
-    )
-  }
+    </>
+  )
+}
