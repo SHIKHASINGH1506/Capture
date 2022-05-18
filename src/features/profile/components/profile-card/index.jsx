@@ -23,7 +23,7 @@ export const ProfileCard = () => {
     dispatch(openEditProfileModal());
     dispatch(setEditProfileData(user));
   }
-
+  const userPostCount = posts.filter(post => post.username === user.username).length;
   return (
     <div className='flex w-full bg-white'>
       <div className='flex flex-col w-full gap-2 p-5'>
@@ -48,12 +48,12 @@ export const ProfileCard = () => {
             </a>
           </p>
           <p>
-            <i class="fa-solid fa-location-dot mr-2"></i>
+            <i className="fa-solid fa-location-dot mr-2"></i>
             {country}
           </p>
         </div>
         <div className='flex gap-3'>
-          <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{posts?.length}</span> Posts</p>
+          <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{userPostCount}</span> Posts</p>
           <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{followers?.length}</span> Followers</p>
           <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{following?.length}</span> Followings</p>
         </div>
