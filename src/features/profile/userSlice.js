@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAllUserService, followUserService, unFollowUserService } from 'service';
+import { updateUser } from 'features';
 
 const initialState = {
   userLoading: false,
@@ -21,10 +22,11 @@ export const getAllUser = createAsyncThunk(
 
 export const followUser = createAsyncThunk(
   "post/followUser",
-  async ({ token, id }, thunkAPI) => {
+  async ({ token, id, dispatch }, thunkAPI) => {
     console.log('From follow user');
     try {
       const { data } = await followUserService(token, id);
+      dispatch(updateUser({token: token, profileData: data.user}));
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -85,8 +87,8 @@ const userSlice = createSlice({
       state.allUsers = [...state.allUsers].map((user) => {
         if (user.username === action.payload.followUser.username)
           return action.payload.followUser
-        if (user.username === action.payload.user.username)
-          return action.payload.user
+        // if (user.username === action.payload.user.username)
+        //   return action.payload.user
         else
           return user;
       });
