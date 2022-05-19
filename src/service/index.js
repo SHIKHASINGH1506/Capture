@@ -6,7 +6,8 @@ export {
   editPostService, 
   deletePostService,
   likePostService,
-  dislikePostService
+  dislikePostService,
+  addCommentsToPostService
 } from './post';
 export { 
   getAllBookmarksService, 

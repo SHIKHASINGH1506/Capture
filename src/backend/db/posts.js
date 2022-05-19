@@ -19,6 +19,27 @@ export const posts = [
     username: "adarshbalika",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "shikhasingh",
+        text: "Wow! Keep it up.",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        }
+      },
+      {
+        _id: uuid(),
+        username: "elonmusk",
+        text: "Sounds great! Let's aquire that as well.",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        }
+      },
+
+    ]
   },
   {
     _id: uuid(),
@@ -32,6 +53,17 @@ export const posts = [
     username: "shubhamsoni",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "sundar.gg",
+        text: "Let's meet up soon",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        }
+      },
+    ]
   },
   {
     _id: uuid(),
@@ -45,6 +77,17 @@ export const posts = [
     username: "elonmusk",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "jeffB",
+        text: "How about giving it one more try!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        }
+      },
+    ]
   },
   {
     _id: uuid(),
@@ -58,5 +101,16 @@ export const posts = [
     username: "sundar.gg",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "tanaypratap",
+        text: "So proud of you!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        }
+      },
+    ]
   },
 ];

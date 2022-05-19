@@ -9,7 +9,8 @@ import {
   getAllBookmarksService, 
   addBookmarkService, 
   removeBookmarkService,
-  getPostsByUsernameService
+  getPostsByUsernameService,
+  addCommentsToPostService
 } from 'service';
 
 const initialState = {
@@ -147,6 +148,30 @@ export const getAllBookmarkPosts = createAsyncThunk(
   }
 );
 
+// export const getPostComments = createASyncThunk(
+//   'post/addComment',
+//   async ({token, postId}, {RejectWithValue}) => {
+//     try{
+//       const {data} = await getPostCommentsService(token, postId);
+//       return data;
+//     }catch(error){
+//       return RejectWithValue(error.message);
+//     }
+//   }
+// )
+
+export const addCommentToPost = createAsyncThunk(
+  'post/addComment',
+  async ({token, postId, commentData}, {RejectWithValue}) => {
+    try{
+      const {data} = await addCommentsToPostService(token, postId, commentData);
+      return data.posts;
+    }catch(error){
+      return RejectWithValue(error.message);
+    }
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState,
@@ -252,6 +277,28 @@ const postSlice = createSlice({
     builder.addCase(getAllBookmarkPosts.rejected, (state) => {
       state.postLoading = false;
       state.postError = 'Error in get bookmark post';
+    }),
+    // builder.addCase(getPostComments.pending, (state) => {
+    //   state.postLoading = true;
+    // })
+    // builder.addCase(getPostComments.fulfilled, (state, {payload}) => {
+    //   state.postLoading = false;
+    //   state.bookmarks = payload;
+    // })
+    // builder.addCase(getPostComments.rejected, (state) => {
+    //   state.postLoading = false;
+    //   state.postError = 'Error in get bookmark post';
+    // }),
+    builder.addCase(addCommentToPost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(addCommentToPost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(addCommentToPost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in adding commentes to post';
     })
     
     
