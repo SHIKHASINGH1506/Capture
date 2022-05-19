@@ -8,14 +8,16 @@ import {
   dislikePostService,
   getAllBookmarksService, 
   addBookmarkService, 
-  removeBookmarkService
+  removeBookmarkService,
+  getPostsByUsernameService
 } from 'service';
 
 const initialState = {
   posts: [],
   postLoading: false,
   postError: null,
-  bookmarks: []
+  bookmarks: [],
+  userPosts: []
 }
 
 export const addPost = createAsyncThunk(
@@ -66,6 +68,18 @@ export const getAllPosts = createAsyncThunk(
     }catch(err){
       console.log(err.response.data);
       return RejectWithValue(err.message);
+    }
+  }
+)
+
+export const getPostByUsername = createAsyncThunk(
+  'post/getPostByUserId',
+  async ({token, username}, {RejectWithValue}) => {
+    try{
+      const {data} = await getPostsByUsernameService(token, username);
+      return data.post;
+    }catch(error){
+      return RejectWithValue(error.message);
     }
   }
 )
@@ -149,6 +163,17 @@ const postSlice = createSlice({
     builder.addCase(getAllPosts.rejected, (state) => {
       state.postLoading = false;
       state.postError = 'Error in get all posts';
+    })
+    builder.addCase(getPostByUsername.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(getPostByUsername.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.userPosts = payload;
+    })
+    builder.addCase(getPostByUsername.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in get user"s posts';
     })
     builder.addCase(addPost.pending, (state) => {
       state.postLoading = true;
