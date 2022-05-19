@@ -77,7 +77,7 @@ export const getPostByUsername = createAsyncThunk(
   async ({token, username}, {RejectWithValue}) => {
     try{
       const {data} = await getPostsByUsernameService(token, username);
-      return data.post;
+      return data.posts;
     }catch(error){
       return RejectWithValue(error.message);
     }
@@ -208,26 +208,16 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postError = 'Error in deleting post';
     })
-    builder.addCase(likePost.pending, (state) => {
-      state.postLoading = true;
-    })
     builder.addCase(likePost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(likePost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in liking post';
     })
-    builder.addCase(dislikePost.pending, (state) => {
-      state.postLoading = true;
-    })
     builder.addCase(dislikePost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(dislikePost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in disliking post';
     })
     builder.addCase(bookmarkPost.pending, (state) => {
