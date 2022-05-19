@@ -24,6 +24,12 @@ export const Menubar = () => {
     },
     {
       id: uuid(),
+      name: 'Explore',
+      to: '/explore',
+      icon: <i className="fa-solid fa-hashtag text-xl text-gray-700"></i>
+    },
+    {
+      id: uuid(),
       name: 'Notification',
       to: '/notification',
       icon: <i className="fa-solid fa-bell text-xl text-gray-700"></i>

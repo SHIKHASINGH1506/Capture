@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Navbar, Container } from 'component';
 import { authState, Login, Signup, getAllUser, getAllPosts, getPostByUsername } from 'features';
-import { Home, Bookmark, UserProfile, OtherUserProfile } from 'views';
+import { Home, Bookmark, UserProfile, OtherUserProfile, Explore } from 'views';
 import { ProtectedRoute } from "routes/ProtectedRoute";
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from "react";
@@ -23,7 +23,7 @@ function App() {
       }))
     }
   },
-  [token]);
+    [token]);
 
   return (
     <div className='max-w-screen-xl m-auto'>
@@ -46,6 +46,13 @@ function App() {
             </Container>
           </ProtectedRoute>}
         />
+        <Route path='/explore' element={
+          <ProtectedRoute>
+            <Container>
+              <Explore />
+            </Container>
+          </ProtectedRoute>}
+        />
         <Route path='/bookmark' element={
           <ProtectedRoute>
             <Container>
@@ -61,12 +68,12 @@ function App() {
           </ProtectedRoute>}>
         </Route>
         <Route path='/user-profile/:userName' element={
-            <ProtectedRoute>
-              <Container>
-                <OtherUserProfile />
-              </Container>
-            </ProtectedRoute>}
-          />
+          <ProtectedRoute>
+            <Container>
+              <OtherUserProfile />
+            </Container>
+          </ProtectedRoute>}
+        />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Routes>
