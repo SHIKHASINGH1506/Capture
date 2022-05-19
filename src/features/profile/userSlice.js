@@ -20,32 +20,20 @@ export const getAllUser = createAsyncThunk(
     }
   });
 
-export const followUser = createAsyncThunk(
+export const followUnfollowUser = createAsyncThunk(
   "post/followUser",
-  async ({ token, id, dispatch }, thunkAPI) => {
-    console.log('From follow user');
+  async ({ token, id, dispatch, isFollowing }, {rejectWithValue}) => {
     try {
-      const { data } = await followUserService(token, id);
+      const {data} = isFollowing
+       ? await unFollowUserService(token, id)
+       : await followUserService(token, id);
       dispatch(updateUser({token: token, profileData: data.user}));
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return rejectWithValue(error);
     }
   }
 );
-
-export const unFollowUser = createAsyncThunk(
-  "post/unFollowUser",
-  async ({ token, id }, thunkAPI) => {
-    try {
-      const { data } = await unFollowUserService(token, id);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 
 const userSlice = createSlice({
   name: "user",
@@ -62,10 +50,10 @@ const userSlice = createSlice({
     builder.addCase(getAllUser.rejected, (state) => {
       state.userLoading = false;
     })
-    builder.addCase(followUser.pending, state => {
+    builder.addCase(followUnfollowUser.pending, state => {
       state.userLoading = true
     }),
-    builder.addCase(followUser.fulfilled, (state, action) => {
+    builder.addCase(followUnfollowUser.fulfilled, (state, action) => {
       state.userLoading = false
       state.allUsers = [...state.allUsers].map((user) => {
         if (user.username === action.payload.followUser.username)
@@ -76,24 +64,7 @@ const userSlice = createSlice({
           return user;
       });
     }),
-    builder.addCase(followUser.rejected, (state) => {
-      state.userLoading = false;
-    }),
-    builder.addCase(unFollowUser.pending, state => {
-      state.userLoading = true
-    }),
-    builder.addCase(unFollowUser.fulfilled, (state, action) => {
-      state.userLoading = false
-      state.allUsers = [...state.allUsers].map((user) => {
-        if (user.username === action.payload.followUser.username)
-          return action.payload.followUser
-        // if (user.username === action.payload.user.username)
-        //   return action.payload.user
-        else
-          return user;
-      });
-    }),
-    builder.addCase(unFollowUser.rejected, (state) => {
+    builder.addCase(followUnfollowUser.rejected, (state) => {
       state.userLoading = false;
     })
   }

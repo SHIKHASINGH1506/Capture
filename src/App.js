@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Navbar, Container } from 'component';
 import { authState, Login, Signup, getAllUser } from 'features';
-import { Home, Bookmark, UserProfile } from 'views';
+import { Home, Bookmark, UserProfile, OtherUserProfile } from 'views';
 import { ProtectedRoute } from "routes/ProtectedRoute";
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from "react";
@@ -47,15 +47,15 @@ function App() {
             <Container>
               <Home />
             </Container>
-          </ProtectedRoute>}>
-        </Route>
+          </ProtectedRoute>}
+        />
         <Route path='/bookmark' element={
           <ProtectedRoute>
             <Container>
               <Bookmark />
             </Container>
-          </ProtectedRoute>}>
-        </Route>
+          </ProtectedRoute>}
+        />
         <Route path='/profile' element={
           <ProtectedRoute>
             <Container>
@@ -63,6 +63,13 @@ function App() {
             </Container>
           </ProtectedRoute>}>
         </Route>
+        <Route path='/user-profile/:userId' element={
+            <ProtectedRoute>
+              <Container>
+                <OtherUserProfile />
+              </Container>
+            </ProtectedRoute>}
+          />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Routes>

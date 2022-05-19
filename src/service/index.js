@@ -1,6 +1,7 @@
 export { login, signup } from './auth';
 export {
   getAllPostService,
+  getPostsByUsernameService,
   addPostService, 
   editPostService, 
   deletePostService,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authState, userState, getAllUser, followUser, unFollowUser } from 'features';
+import { authState, userState, getAllUser, followUnfollowUser } from 'features';
 
 export const Suggestions = () => {
   const dispatch = useDispatch();
@@ -10,32 +10,30 @@ export const Suggestions = () => {
   const { allUsers } = useSelector(userState);
 
   const [suggestions, setSuggestion] = useState([]);
-
+  
   useEffect(() => {
-    setSuggestion(
-      allUsers.filter(u => u.username !== user.username)
+    setSuggestion(allUsers
+      .filter(u => u.username !== user.username)
+      .filter(item => !user.following?.find(followingUser => followingUser._id === item._id))
     );
   },
     [user, allUsers]);
 
-  console.log(allUsers);
-
   const isFollowing = followUserId => user.followoing?.find(u => u._id === followUserId) ? true : false;
 
-  const followUnfollowUser = async followUserId => {
+  const followUserHandler = async followUserId => {
     try {
-      const response = isFollowing(followUserId)
-        ? await dispatch(unFollowUser({ token: token, id: followUserId, dispatch: dispatch }))
-        : await dispatch(followUser({ token: token, id: followUserId,  dispatch: dispatch }))
+      const response = await dispatch(followUnfollowUser({ 
+        token: token, 
+        id: followUserId, 
+        dispatch: dispatch, 
+        isFollowing: false 
+      }))
       if (response?.error) {
-        throw new Error(
-          isFollowing(followUserId)
-            ? 'Error in unfollowing the user'
-            : 'Error in following user'
-        );
+        throw new Error('Error in following user');
       }
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
   }
 
@@ -58,12 +56,13 @@ export const Suggestions = () => {
               <div className="img shrink-0">
               </div>
               <div className="flex justify-between grow items-start">
-                <div className="cursor-pointer">
+                <div className="cursor-pointer"
+                  onClick={() => navigate(`/user-profile/${username}`)}>
                   <p>{`${firstName} ${lastName}`}</p>
                   <p className='text-gray-400 text-sm'>@{username}</p>
                 </div>
                 <button className='ml-auto btn-primary text-sm'
-                  onClick={() => followUnfollowUser(_id)}>Follow</button>
+                  onClick={() => followUserHandler(_id)}>Follow</button>
               </div>
             </div>
           )}

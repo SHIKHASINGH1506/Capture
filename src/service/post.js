@@ -5,6 +5,10 @@ const getAllPostService = async () => {
   return await axios.get('/api/posts', {headers: {authorization: token}})
 }
 
+const getPostsByUsernameService = async (token, username) => {
+  return await axios.get(`/api/posts/user/${username}`, {headers: {authorization: token}});
+}
+
 const addPostService =  async (postData) => {
   const token = localStorage.getItem('token');
   return await axios.post('/api/posts', {postData: postData}, {headers: {authorization: token}});
@@ -30,4 +34,4 @@ const dislikePostService = async (postId) => {
   return await axios.post(`/api/posts/dislike/${postId}`, {}, {headers: {authorization: token}});
 }
 
-export {addPostService, getAllPostService, editPostService, deletePostService, likePostService, dislikePostService};
+export {addPostService, getAllPostService, editPostService, deletePostService, likePostService, dislikePostService, getPostsByUsernameService};

@@ -26,7 +26,7 @@ export const UserProfile = () => {
 
   return (
     <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
-      <ProfileCard />
+      <ProfileCard userData={user}/>
       {postLoading
         ? <p>Loading</p>
         : authorPosts?.length > 0
