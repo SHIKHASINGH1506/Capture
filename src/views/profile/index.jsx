@@ -9,7 +9,7 @@ export const UserProfile = () => {
   const authorPosts = posts.filter(post => post.username === user?.username);
 
   return (
-    <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
+    <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 md:w-full items-start">
       <ProfileCard userData={user} userPosts={authorPosts}/>
       {postLoading
         ? <p>Loading</p>

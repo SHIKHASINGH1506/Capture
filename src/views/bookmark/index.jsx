@@ -22,7 +22,7 @@ export const Bookmark = () => {
 
   const bookmarkPosts = posts.filter(post => bookmarks.includes(post._id));
   return(
-    <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
+    <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 md:w-full items-start">
         {bookmarkPosts?.length > 0 && 
           bookmarkPosts.map(
             (post) => {return (

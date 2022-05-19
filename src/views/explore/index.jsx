@@ -6,7 +6,7 @@ export const Explore = () => {
   const { user } = useSelector(authState);
   
   return (
-    <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
+    <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 md:w-full items-start">
         {posts?.length > 0 && 
           posts.map(
             (post) => {return (

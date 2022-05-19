@@ -71,11 +71,11 @@ export const Menubar = () => {
     <aside className='menu px-5 flex flex-col justify-between'>
       <div className='flex flex-col items-start sticky top-0'>
         <div>
-          <div className="flex items-start cursor-pointer p-3 sm:hidden">
+          <div className="flex items-start cursor-pointer p-3 md:hidden">
             <img className='h-10' src={logo} alt="" />
           </div>
         </div>
-        <ul className='menu-icons sm:hidden'>
+        <ul className='menu-icons md:hidden'>
           {mapMenuItems('sidebar')}
           <div className="flex items-start cursor-pointer">
             <div className='flex items-center justify-center gap-4 py-2 px-4 rounded-full hover:bg-white'>
@@ -85,14 +85,14 @@ export const Menubar = () => {
             </div>
           </div>
         </ul>
-        <div className="w-full sm:hidden">
+        <div className="w-full md:hidden">
           <button className='my-6 w-full py-2.5 rounded-full text-white bg-purple-700 hover:bg-purple-600'
           onClick={() => dispatch(openPostModal(true))}>Add Post</button>
         </div>
       </div>
     </aside>
-    <footer className='hidden bg-white menu px-5 mr-6 flex flex-col justify-between sm:block sm:fixed sm:bottom-0 sm:left-0 sm:w-full'>
-      <ul className='menu-icons sm:flex sm:justify-around sm:w-full'>
+    <footer className='hidden bg-white px-5 mr-6 flex flex-col justify-between md:block md:fixed md:bottom-0 md:left-0 md:w-full'>
+      <ul className='menu-icons md:flex md:justify-around md:w-full'>
       {mapMenuItems()}
       </ul>
     </footer>

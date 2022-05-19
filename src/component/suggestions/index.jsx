@@ -36,9 +36,9 @@ export const Suggestions = () => {
       console.log(error.message);
     }
   }
-
+ 
   return (
-    <div className="flex flex-col gap-4 w-1/4 px-5 md:hidden">
+    <div className="flex flex-col gap-4 w-1/4 px-5 lg:hidden">
       <div>
         <div className="search-wrapper flex items-center gap-3 py-2 px-4 bg-white rounded-3xl">
           <i className="fa-solid fa-magnifying-glass"></i>

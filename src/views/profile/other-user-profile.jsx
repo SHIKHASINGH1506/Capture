@@ -19,7 +19,7 @@ export const OtherUserProfile = () => {
   const usesposts = posts.filter(post => post.username === userName);
 
   return foundUser?.username ?(
-    <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
+    <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 md:w-full items-start">
       <ProfileCard userData={foundUser} userPosts={usesposts}/>
       {postLoading
         ? <p>Loading</p>
