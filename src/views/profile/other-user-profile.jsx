@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export const OtherUserProfile = () => {
-  const { userId } = useParams();
+  const { userName } = useParams();
   const dispatch = useDispatch();
   const { token } = useSelector(authState);
   const { allUsers } = useSelector(userState);
@@ -13,31 +13,18 @@ export const OtherUserProfile = () => {
   const [foundUser, setFoundUser] = useState();
 
   useEffect(() => {
-    setFoundUser(allUsers.find(user => user.username === userId));
-  }, [userId, allUsers]);
+    setFoundUser(allUsers.find(user => user.username === userName));
+  }, [userName, allUsers]);
 
-  useEffect(() => {
-    (async () => {
-      try{
-      const response = await dispatch(getPostByUsername({
-        token: token, 
-        username: foundUser?.username
-      }));
-      if(response?.error)
-        throw new Error('Error in getting user post');
-    }catch(erorr){
-      console.log(error.message);
-    }
-    })();
-  }, [foundUser, posts]);
+  const usesposts = posts.filter(post => post.username === userName);
 
   return foundUser?.username ?(
     <div className="flex flex-col gap-6 w-2/4 px-5 md:w-full items-start">
-      <ProfileCard userData={foundUser}/>
+      <ProfileCard userData={foundUser} userPosts={usesposts}/>
       {postLoading
         ? <p>Loading</p>
-        : userPosts?.length > 0
-          ? userPosts.map(
+        : usesposts?.length > 0
+          ? usesposts.map(
             (post) => {
               return (
                 <PostCard key={post._id} post={post} dialogOption={true} />
