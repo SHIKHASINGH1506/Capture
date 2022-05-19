@@ -16,7 +16,9 @@ export const users = [
     updatedAt: formatDate(),
     bio: "Founder, CEO and creator of @Appwrite , the 100% open source alternative for Firebase",
     link: "https://shikha.netlify.app/",
-    country: 'India'
+    country: 'India',
+    followers: [],
+    following: [],
   },
   {
     _id: uuid(),
@@ -65,5 +67,18 @@ export const users = [
     bio: "Founder @invactHQ | x @Microsoft | Fixing education | Mentored 100+ students to first tech job | Tweets: Tech, Education, Career, Metaverse and Startups.",
     link: "https://letters.tanaypratap.com/",
     country: 'India'
+  },
+  {
+    _id: uuid(),
+    firstName: "John",
+    lastName: "Doe",
+    username: "johndoe",
+    password: "john123",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    bio: "bot user",
+    link: "",
+    country: 'India'
   }
+  
 ];
