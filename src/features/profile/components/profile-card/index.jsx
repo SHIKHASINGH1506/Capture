@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 
-export const ProfileCard = ({ userData }) => {
-  console.log(userData);
+export const ProfileCard = ({ userData, userPosts }) => {
   const {
     _id,
     firstName,
@@ -20,7 +19,7 @@ export const ProfileCard = ({ userData }) => {
 
   const location = useLocation();
   const dispatch = useDispatch();
-  const { posts } = useSelector(getPostState);
+ // const { posts } = useSelector(getPostState);
   const { user, token } = useSelector(authState);
 
   useEffect(() => {
@@ -33,13 +32,12 @@ export const ProfileCard = ({ userData }) => {
     dispatch(openEditProfileModal());
     dispatch(setEditProfileData(user));
   }
-  const userPostCount = posts.filter(post => post.username === user.username).length;
+  
   const pathDetail = location.pathname;
 
   const isFollowing = () => followers?.find(u => u.username === user.username);
 
   const followUnfollowBtn = isFollowing() ? 'Unfollow' : 'Follow';
-  console.log(followUnfollowBtn);
 
   const followUnfollowUserHandler = async () => {
     try {
@@ -68,8 +66,6 @@ export const ProfileCard = ({ userData }) => {
       console.log(error.message);
     }
   }
-
-
 
   return (
     <div className='flex w-full bg-white'>
@@ -106,7 +102,7 @@ export const ProfileCard = ({ userData }) => {
           </p>
         </div>
         <div className='flex gap-3'>
-          <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{userPostCount}</span> Posts</p>
+          <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{userPosts?.length}</span> Posts</p>
           <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{followers?.length}</span> Followers</p>
           <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{following?.length}</span> Followings</p>
         </div>
