@@ -63,7 +63,7 @@ function App() {
             </Container>
           </ProtectedRoute>}>
         </Route>
-        <Route path='/user-profile/:userId' element={
+        <Route path='/user-profile/:userName' element={
             <ProtectedRoute>
               <Container>
                 <OtherUserProfile />
