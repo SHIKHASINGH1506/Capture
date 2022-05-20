@@ -27,7 +27,7 @@ export const OtherUserProfile = () => {
           ? usesposts.map(
             (post) => {
               return (
-                <PostCard key={post._id} post={post} dialogOption={true} />
+                <PostCard key={post._id} post={post} dialogOption={false} />
               )
             }
           )
