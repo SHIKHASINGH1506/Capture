@@ -30,12 +30,6 @@ export const Menubar = () => {
     },
     {
       id: uuid(),
-      name: 'Notification',
-      to: '/notification',
-      icon: <i className="fa-solid fa-bell text-xl text-gray-700"></i>
-    },
-    {
-      id: uuid(),
       name: 'Bookmark',
       to: '/bookmark',
       icon: <i className="fa-solid fa-bookmark text-xl text-gray-700"></i>

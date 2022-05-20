@@ -118,7 +118,7 @@ export const PostCard = ({ post, dialogOption }) => {
   return (
     <>
       <div className='flex flex-col p-5 w-full bg-white'>
-        <div className='flex gap-4'>
+        <div className='flex'>
           <div className='h-14 w-14 shrink-0'>
             <img className='h-14 w-14 object-cover rounded-full' src={username === user.username ? user.profileImage : profileImgUrl} alt="" />
           </div>
