@@ -43,7 +43,6 @@ const validatePasswordHandler = ({target:{name, value}}) =>{
 const signupFormHandler = async (e, signupFields) =>{
   e.preventDefault();
   try{
-    console.log(signupFields);
     const response = await dispatch(signupUser(signupFields));
     if(response?.error){
       if(response.payload.includes('422'))

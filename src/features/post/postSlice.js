@@ -9,7 +9,8 @@ import {
   getAllBookmarksService, 
   addBookmarkService, 
   removeBookmarkService,
-  getPostsByUsernameService
+  getPostsByUsernameService,
+  addCommentsToPostService
 } from 'service';
 
 const initialState = {
@@ -22,130 +23,142 @@ const initialState = {
 
 export const addPost = createAsyncThunk(
   'post/addPost',
-  async (postData, {RejectWithValue})  => {
+  async (postData, {rejectWithValue})  => {
     try{
       const {data} = await addPostService(postData);
       return data.posts;
     }catch(err){
       console.log(err.message);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const editPost = createAsyncThunk(
   'post/editPost',
-  async (postData, {RejectWithValue})  => {
+  async (postData, {rejectWithValue})  => {
     try{
       const {data} = await editPostService(postData?._id, postData);
       return data.posts;
     }catch(err){
       console.log(err.message);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const deletePost = createAsyncThunk(
   'post/deletePost',
-  async (postId, {RejectWithValue})  => {
+  async (postId, {rejectWithValue})  => {
     try{
       const {data} = await deletePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.message);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const getAllPosts = createAsyncThunk(
   'post/getAllPosts',
-  async (token='gdhs', {RejectWithValue}) => {
+  async (token='gdhs', {rejectWithValue}) => {
     try{
       const{data} = await getAllPostService();
       return data.posts;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const getPostByUsername = createAsyncThunk(
   'post/getPostByUserId',
-  async ({token, username}, {RejectWithValue}) => {
+  async ({token, username}, {rejectWithValue}) => {
     try{
       const {data} = await getPostsByUsernameService(token, username);
-      return data.post;
+      return data.posts;
     }catch(error){
-      return RejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 )
 
 export const likePost = createAsyncThunk(
   'post/likePost',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await likePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const dislikePost = createAsyncThunk(
   'post/dislikePost',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await dislikePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const bookmarkPost = createAsyncThunk(
   'post/bookmarkPost',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await addBookmarkService(postId);
       return data.bookmarks;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
 export const removePostFromBookmark = createAsyncThunk(
   'post/removePostFromBookmark',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await removeBookmarkService(postId);
       return data.bookmarks;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
 export const getAllBookmarkPosts = createAsyncThunk(
   'post/getAllBookmarkPosts',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await getAllBookmarksService();
       return data.bookmarks;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
+
+export const addCommentToPost = createAsyncThunk(
+  'post/addComment',
+  async ({token, postId, commentData}, {rejectWithValue}) => {
+    try{
+      const {data} = await addCommentsToPostService(token, postId, commentData);
+      return data.posts;
+    }catch(error){
+      return rejectWithValue(error.message);
+    }
+  }
+)
 
 const postSlice = createSlice({
   name: 'post',
@@ -208,26 +221,16 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postError = 'Error in deleting post';
     })
-    builder.addCase(likePost.pending, (state) => {
-      state.postLoading = true;
-    })
     builder.addCase(likePost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(likePost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in liking post';
     })
-    builder.addCase(dislikePost.pending, (state) => {
-      state.postLoading = true;
-    })
     builder.addCase(dislikePost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(dislikePost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in disliking post';
     })
     builder.addCase(bookmarkPost.pending, (state) => {
@@ -262,6 +265,28 @@ const postSlice = createSlice({
     builder.addCase(getAllBookmarkPosts.rejected, (state) => {
       state.postLoading = false;
       state.postError = 'Error in get bookmark post';
+    }),
+    // builder.addCase(getPostComments.pending, (state) => {
+    //   state.postLoading = true;
+    // })
+    // builder.addCase(getPostComments.fulfilled, (state, {payload}) => {
+    //   state.postLoading = false;
+    //   state.bookmarks = payload;
+    // })
+    // builder.addCase(getPostComments.rejected, (state) => {
+    //   state.postLoading = false;
+    //   state.postError = 'Error in get bookmark post';
+    // }),
+    builder.addCase(addCommentToPost.pending, (state) => {
+      state.postLoading = true;
+    })
+    builder.addCase(addCommentToPost.fulfilled, (state, {payload}) => {
+      state.postLoading = false;
+      state.posts = payload;
+    })
+    builder.addCase(addCommentToPost.rejected, (state) => {
+      state.postLoading = false;
+      state.postError = 'Error in adding commentes to post';
     })
     
     

@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 
-export const ProfileCard = ({ userData }) => {
-  console.log(userData);
+export const ProfileCard = ({ userData, userPosts }) => {
   const {
     _id,
     firstName,
@@ -15,12 +14,12 @@ export const ProfileCard = ({ userData }) => {
     following,
     bio,
     link,
-    country
+    country, 
+    profileImage
   } = userData;
 
   const location = useLocation();
   const dispatch = useDispatch();
-  const { posts } = useSelector(getPostState);
   const { user, token } = useSelector(authState);
 
   useEffect(() => {
@@ -33,13 +32,12 @@ export const ProfileCard = ({ userData }) => {
     dispatch(openEditProfileModal());
     dispatch(setEditProfileData(user));
   }
-  const userPostCount = posts.filter(post => post.username === user.username).length;
+  
   const pathDetail = location.pathname;
 
   const isFollowing = () => followers?.find(u => u.username === user.username);
 
   const followUnfollowBtn = isFollowing() ? 'Unfollow' : 'Follow';
-  console.log(followUnfollowBtn);
 
   const followUnfollowUserHandler = async () => {
     try {
@@ -69,14 +67,12 @@ export const ProfileCard = ({ userData }) => {
     }
   }
 
-
-
   return (
     <div className='flex w-full bg-white'>
       <div className='flex flex-col w-full gap-2 p-5'>
         <div className='flex items-start'>
           <div className='h-24 w-24 sm:w-20 sm:h-20 shrink-0'>
-            <img className='object-cover rounded-full' src='https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/810/profiles/19338/profileImage/profile-square-extra-small.png' alt="" />
+            <img className='w-20 h-20 object-cover rounded-full' src={profileImage} alt="" />
           </div>
           {pathDetail === '/profile'
             ? <button className='btn-outline-primary ml-auto'
@@ -106,7 +102,7 @@ export const ProfileCard = ({ userData }) => {
           </p>
         </div>
         <div className='flex gap-3'>
-          <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{userPostCount}</span> Posts</p>
+          <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{userPosts?.length}</span> Posts</p>
           <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{followers?.length}</span> Followers</p>
           <p className='text-gray-500'><span className='font-bold text-dark-slate-gray'>{following?.length}</span> Followings</p>
         </div>

@@ -9,9 +9,10 @@ export const EditProfileForm = () => {
     lastName,
     bio,
     link,
-    country
+    country,
+    profileImage
   },
-  token } = useSelector(authState);
+    token } = useSelector(authState);
   const dispatch = useDispatch();
   const { showToast } = useToast();
 
@@ -20,7 +21,8 @@ export const EditProfileForm = () => {
     lastName: lastName,
     bio: bio,
     link: link,
-    country: country
+    country: country,
+    profileImage: profileImage
   }
   const [profileData, setProfileData] = useState(userProfileInititialValues);
 
@@ -35,23 +37,68 @@ export const EditProfileForm = () => {
 
   const editFormHandler = async (e) => {
     e.preventDefault();
-    try{
-    const response = await dispatch(updateUser({token, profileData}));
-    if(response?.error)
-      throw new Error('Error in updating user profile');
-    dispatch(setEditProfileData({}));
-    dispatch(closeEditProfileModal());
-    showToast('Profile updated successfully', 'success');
-    }catch(error){
+    try {
+      const response = await dispatch(updateUser({ token, profileData }));
+      if (response?.error)
+        throw new Error('Error in updating user profile');
+      dispatch(setEditProfileData({}));
+      dispatch(closeEditProfileModal());
+      showToast('Profile updated successfully', 'success');
+    } catch (error) {
       console.log(error.message);
       showToast('Profile update failed', 'error');
     }
   }
+  const uploadImageHandler = async (imageFile) => {
+    const url =
+      "https://api.cloudinary.com/v1_1/" +
+      process.env.REACT_APP_CLOUD_NAME +
+      "/image/upload";
+
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", process.env.REACT_APP_PRESET_NAME);
+
+    await fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setProfileData((prevProfileData) => ({
+          ...prevProfileData,
+          profileImage: data.url,
+        }));
+      })
+      .catch((error) => {
+        console.log(error.message);
+        showToast(
+          "Failed to update image. Please try again later.",
+          "error"
+        )
+      }
+      );
+  };
+
+  console.log(profileData);
 
   return (
     <div className="flex bg-base-purple p-4">
       <form className='w-full flex flex-col gap-4' onSubmit={editFormHandler}>
-        <h3 className='text-center font-bold text-lg'>Edit Profile</h3>
+        <div className='flex'>
+          <h3 className='font-bold text-lg'>Edit Profile</h3>
+          <div className='h-14 w-14 sm:w-20 sm:h-20 shrink-0 ml-auto relative'>
+            <img className='h-14 w-14 object-cover rounded-full' src={profileData.profileImage} alt="" />
+            <i className="absolute top-8 right-0 bg-white rounded-full p-1 flex items-center fa-solid fa-camera text-purple-700"></i>
+            <input
+              className="cursor-pointer absolute top-8 opacity-0 right-0 w-8"
+              accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/jpg,image/webp"
+              type="file"
+              onChange={(e) => uploadImageHandler(e.target.files[0])}
+            />
+          </div>
+        </div>
+
         <div className="flex flex-col gap-4">
           <input
             type="text"
@@ -63,7 +110,7 @@ export const EditProfileForm = () => {
             className="auth-input"
             required
           />
-           <input
+          <input
             type="text"
             name="lastName"
             placeholder="Last Name"
@@ -73,7 +120,7 @@ export const EditProfileForm = () => {
             className="auth-input"
             required
           />
-           <textarea
+          <textarea
             type="text"
             name="bio"
             placeholder="Bio"
@@ -82,7 +129,7 @@ export const EditProfileForm = () => {
             onChange={setProfileHandler}
             className="auth-input resize-none overflow-y-auto"
           />
-           <input
+          <input
             type="text"
             name="link"
             placeholder="Website/Portfolio Link"
@@ -91,7 +138,7 @@ export const EditProfileForm = () => {
             onChange={setProfileHandler}
             className="auth-input"
           />
-           <input
+          <input
             type="text"
             name="country"
             placeholder="Country"
@@ -101,7 +148,7 @@ export const EditProfileForm = () => {
             className="auth-input"
           />
         </div>
-        <button type='submit' className='btn-primary'>Edit Profile</button>
+        <button type='submit' className='btn-primary'>Save Profile</button>
       </form>
     </div>
   )

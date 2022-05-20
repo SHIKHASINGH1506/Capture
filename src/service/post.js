@@ -34,4 +34,8 @@ const dislikePostService = async (postId) => {
   return await axios.post(`/api/posts/dislike/${postId}`, {}, {headers: {authorization: token}});
 }
 
-export {addPostService, getAllPostService, editPostService, deletePostService, likePostService, dislikePostService, getPostsByUsernameService};
+const addCommentsToPostService = async(token, postId, commentData) => {
+  return await axios.post(`api/comments/add/${postId}`, {commentData: commentData}, {headers: {authorization: token}});
+}
+
+export {addPostService, getAllPostService, editPostService, deletePostService, likePostService, dislikePostService, getPostsByUsernameService, addCommentsToPostService};

@@ -25,6 +25,10 @@ import {
   unfollowUserHandler,
   editUserHandler,
 } from "./backend/controllers/UserController";
+import {
+  getPostCommentsHandler,
+  addCommentToPostHandler
+} from "./backend/controllers/CommentController";
 
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
@@ -69,6 +73,8 @@ export function makeServer({ environment = "development" } = {}) {
       this.post("/posts/edit/:postId", editPostHandler.bind(this));
       this.post("/posts/like/:postId", likePostHandler.bind(this));
       this.post("/posts/dislike/:postId", dislikePostHandler.bind(this));
+      this.get("/comments/:postId", getPostCommentsHandler.bind(this));
+      this.post("/comments/add/:postId", addCommentToPostHandler.bind(this));
 
       // user routes (public)
       this.get("/users", getAllUsersHandler.bind(this));
@@ -87,6 +93,8 @@ export function makeServer({ environment = "development" } = {}) {
         "/users/unfollow/:followUserId/",
         unfollowUserHandler.bind(this)
       );
+      this.passthrough();
+      this.passthrough("https://api.cloudinary.com/v1_1/"+process.env.REACT_APP_CLOUD_NAME +"/image/upload", ["post"]);
     },
   });
 }
