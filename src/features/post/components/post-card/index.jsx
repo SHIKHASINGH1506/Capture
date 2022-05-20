@@ -117,8 +117,8 @@ export const PostCard = ({ post, dialogOption }) => {
 
   return (
     <>
-      <div className='flex flex-col w-full bg-white'>
-        <div className='flex p-5 gap-4'>
+      <div className='flex flex-col p-5 w-full bg-white'>
+        <div className='flex gap-4'>
           <div className='h-14 w-14 shrink-0'>
             <img className='h-14 w-14 object-cover rounded-full' src={username === user.username ? user.profileImage : profileImgUrl} alt="" />
           </div>
@@ -152,28 +152,28 @@ export const PostCard = ({ post, dialogOption }) => {
               </button>}
               {postOptionModal && <PostMoreModal postData={post} optionHandler={optionHandler} />}
             </div>
-            <div className="comment flex gap-4">
-              <div className='h-8 w-8 shrink-0'>
-                <img className='h-8 w-8 object-cover rounded-full' src={username === user.username ? user.profileImage : profileImgUrl} alt="" />
-              </div>
-              <form className='w-full border border-solid border-light-gray1 px-3 flex py-0' onSubmit={commentHandler}>
-                <input
-                  type="text"
-                  className='w-full focus:outline-none'
-                  placeholder="Post your reply"
-                  name="comment"
-                  value={comment}
-                  onChange={e => setComment(e.target.value)} />
-                <button className='disabled:text-gray-400 text-purple-700 ml-auto'
-                  disabled={comment.length <= 0} >Reply</button>
-              </form>
-            </div>
-            <div>
-              {sortedCommentList.length > 0 && <div className="comment-list">
-                {sortedCommentList.map(comment => <CommentList key={comment._id} comment={comment} />)}
-              </div>}
-            </div>
           </div>
+        </div>
+        <div className="comment flex items-center gap-4">
+          <div className='h-14 w-14 flex items-center justify-center shrink-0'>
+            <img className='h-10 w-10 object-cover rounded-full' src={username === user.username ? user.profileImage : profileImgUrl} alt="" />
+          </div>
+          <form className='w-full border border-solid border-light-gray1 px-3 flex py-0' onSubmit={commentHandler}>
+            <input
+              type="text"
+              className='w-full focus:outline-none py-1'
+              placeholder="Post your reply"
+              name="comment"
+              value={comment}
+              onChange={e => setComment(e.target.value)} />
+            <button className='disabled:text-gray-400 text-purple-700 ml-auto'
+              disabled={comment.length <= 0} >Reply</button>
+          </form>
+        </div>
+        <div>
+          {sortedCommentList.length > 0 && <div className="comment-list">
+            {sortedCommentList.map(comment => <CommentList key={comment._id} comment={comment} />)}
+          </div>}
         </div>
       </div>
     </>

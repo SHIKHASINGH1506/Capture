@@ -14,9 +14,9 @@ export const CommentList = ({ comment }) => {
   const commentAuthor = allUsers &&
     allUsers.find(user => user.username === username);
   return (
-    <div className="flex gap-4 py-2">
-      <div className='h-8 w-8 shrink-0'>
-        <img className='h-8 w-8 object-cover rounded-full' src={user.username === username ? user.profileImage : commentAuthor.profileImage} alt="" />
+    <div className="flex items-center gap-4">
+      <div className='h-14 w-14 flex items-center justify-center shrink-0'>
+        <img className='h-10 w-10 object-cover rounded-full' src={user.username === username ? user.profileImage : commentAuthor.profileImage} alt="" />
       </div>
       <div>
         <p className='text-sm font-bold cursor-pointer'
