@@ -23,151 +23,139 @@ const initialState = {
 
 export const addPost = createAsyncThunk(
   'post/addPost',
-  async (postData, {RejectWithValue})  => {
+  async (postData, {rejectWithValue})  => {
     try{
       const {data} = await addPostService(postData);
       return data.posts;
     }catch(err){
       console.log(err.message);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const editPost = createAsyncThunk(
   'post/editPost',
-  async (postData, {RejectWithValue})  => {
+  async (postData, {rejectWithValue})  => {
     try{
       const {data} = await editPostService(postData?._id, postData);
       return data.posts;
     }catch(err){
       console.log(err.message);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const deletePost = createAsyncThunk(
   'post/deletePost',
-  async (postId, {RejectWithValue})  => {
+  async (postId, {rejectWithValue})  => {
     try{
       const {data} = await deletePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.message);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const getAllPosts = createAsyncThunk(
   'post/getAllPosts',
-  async (token='gdhs', {RejectWithValue}) => {
+  async (token='gdhs', {rejectWithValue}) => {
     try{
       const{data} = await getAllPostService();
       return data.posts;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const getPostByUsername = createAsyncThunk(
   'post/getPostByUserId',
-  async ({token, username}, {RejectWithValue}) => {
+  async ({token, username}, {rejectWithValue}) => {
     try{
       const {data} = await getPostsByUsernameService(token, username);
       return data.posts;
     }catch(error){
-      return RejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 )
 
 export const likePost = createAsyncThunk(
   'post/likePost',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await likePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const dislikePost = createAsyncThunk(
   'post/dislikePost',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await dislikePostService(postId);
       return data.posts;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 )
 
 export const bookmarkPost = createAsyncThunk(
   'post/bookmarkPost',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await addBookmarkService(postId);
       return data.bookmarks;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
 export const removePostFromBookmark = createAsyncThunk(
   'post/removePostFromBookmark',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await removeBookmarkService(postId);
       return data.bookmarks;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
 export const getAllBookmarkPosts = createAsyncThunk(
   'post/getAllBookmarkPosts',
-  async (postId, {RejectWithValue}) => {
+  async (postId, {rejectWithValue}) => {
     try{
       const{data} = await getAllBookmarksService();
       return data.bookmarks;
     }catch(err){
       console.log(err.response.data);
-      return RejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
 
-// export const getPostComments = createASyncThunk(
-//   'post/addComment',
-//   async ({token, postId}, {RejectWithValue}) => {
-//     try{
-//       const {data} = await getPostCommentsService(token, postId);
-//       return data;
-//     }catch(error){
-//       return RejectWithValue(error.message);
-//     }
-//   }
-// )
-
 export const addCommentToPost = createAsyncThunk(
   'post/addComment',
-  async ({token, postId, commentData}, {RejectWithValue}) => {
+  async ({token, postId, commentData}, {rejectWithValue}) => {
     try{
       const {data} = await addCommentsToPostService(token, postId, commentData);
       return data.posts;
     }catch(error){
-      return RejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 )
