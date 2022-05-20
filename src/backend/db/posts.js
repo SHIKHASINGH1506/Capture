@@ -28,7 +28,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-01-18T02:38:12+05:30",
       },
       {
         _id: uuid(),
@@ -37,7 +38,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-03-15T12:38:12+05:30",
       },
 
     ]
@@ -63,7 +65,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-05-13T02:05:12+05:30",
       }
     ]
   },
@@ -88,7 +91,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-04-19T02:40:12+05:30",
       },
       {
         _id: uuid(),
@@ -97,7 +101,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-04-23T04:38:12+05:30",
       },
 
     ]
@@ -123,7 +128,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-03-17T02:38:12+05:30",
       },
     ]
   },
@@ -148,7 +154,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-03-03T02:38:12+05:30",
       },
     ]
   },
@@ -173,7 +180,8 @@ export const posts = [
         votes: {
           upvotedBy: [],
           downvotedBy: [],
-        }
+        },
+        createdAt: "2022-01-20T02:38:12+05:30",
       },
     ]
   },
