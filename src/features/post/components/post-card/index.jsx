@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { PostMoreModal } from 'component';
 import { useLoading } from 'custom-hooks/useLoading';
-import { authState, getPostState, likePost, dislikePost, bookmarkPost, removePostFromBookmark, addCommentToPost } from 'features';
+import { authState, getPostState, likePost, dislikePost, bookmarkPost, removePostFromBookmark, addCommentToPost, userState } from 'features';
 import { CommentList } from '../comment-list';
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "custom-hooks/useToast";
+import { useEffect } from "react";
 
 export const PostCard = ({ post, dialogOption }) => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ export const PostCard = ({ post, dialogOption }) => {
 
   const { user, token } = useSelector(authState);
   const { bookmarks } = useSelector(getPostState);
+  const { allUsers } = useSelector(userState);
   const [comment, setComment] = useState("");
   const {
     loadingState: {
@@ -29,6 +31,18 @@ export const PostCard = ({ post, dialogOption }) => {
     likes: { likedBy, likeCount },
     comments
   } = post;
+
+  const [sortedCommentList, setCommentList] = useState(comments);
+  useEffect(() => {
+    if (comments) {
+      setCommentList(
+        [...comments].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      );
+    }
+  },
+    [comments]);
+
+  const profileImgUrl = allUsers.find(u => u.username === username)?.profileImage;
 
   const optionHandler = () => {
     setPostOtionModal(prevState => !prevState);
@@ -105,8 +119,8 @@ export const PostCard = ({ post, dialogOption }) => {
     <>
       <div className='flex flex-col w-full bg-white'>
         <div className='flex p-5 gap-4'>
-          <div className='h-12 w-12 shrink-0'>
-            <img className='object-cover rounded-full' src='https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/810/profiles/19338/profileImage/profile-square-extra-small.png' alt="" />
+          <div className='h-14 w-14 shrink-0'>
+            <img className='h-14 w-14 object-cover rounded-full' src={username === user.username ? user.profileImage : profileImgUrl} alt="" />
           </div>
           <div className='flex flex-col w-full gap-2.5 px-4'>
             <div className='flex'>
@@ -140,7 +154,7 @@ export const PostCard = ({ post, dialogOption }) => {
             </div>
             <div className="comment flex gap-4">
               <div className='h-8 w-8 shrink-0'>
-                <img className='object-cover rounded-full' src='https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/810/profiles/19338/profileImage/profile-square-extra-small.png' alt="" />
+                <img className='h-8 w-8 object-cover rounded-full' src={username === user.username ? user.profileImage : profileImgUrl} alt="" />
               </div>
               <form className='w-full border border-solid border-light-gray1 px-3 flex py-0' onSubmit={commentHandler}>
                 <input
@@ -155,8 +169,8 @@ export const PostCard = ({ post, dialogOption }) => {
               </form>
             </div>
             <div>
-              {comments.length > 0 && <div className="comment-list">
-                {comments.map(comment => <CommentList key={comment._id} comment={comment} />)}
+              {sortedCommentList.length > 0 && <div className="comment-list">
+                {sortedCommentList.map(comment => <CommentList key={comment._id} comment={comment} />)}
               </div>}
             </div>
           </div>
