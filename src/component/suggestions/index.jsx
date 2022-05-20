@@ -10,7 +10,7 @@ export const Suggestions = () => {
   const { allUsers } = useSelector(userState);
 
   const [suggestions, setSuggestion] = useState([]);
-  
+
   useEffect(() => {
     setSuggestion(allUsers
       .filter(u => u.username !== user.username)
@@ -23,11 +23,11 @@ export const Suggestions = () => {
 
   const followUserHandler = async followUserId => {
     try {
-      const response = await dispatch(followUnfollowUser({ 
-        token: token, 
-        id: followUserId, 
-        dispatch: dispatch, 
-        isFollowing: false 
+      const response = await dispatch(followUnfollowUser({
+        token: token,
+        id: followUserId,
+        dispatch: dispatch,
+        isFollowing: false
       }))
       if (response?.error) {
         throw new Error('Error in following user');
@@ -36,7 +36,7 @@ export const Suggestions = () => {
       console.log(error.message);
     }
   }
- 
+
   return (
     <div className="flex flex-col gap-4 w-1/4 px-5 lg:hidden">
       <div>
@@ -51,9 +51,10 @@ export const Suggestions = () => {
         </div>
         <div className="suggestion-list">
 
-          {suggestions.map(({ firstName, lastName, username, _id }) =>
-            <div className='flex py-3' key={_id}>
-              <div className="img shrink-0">
+          {suggestions.map(({ firstName, lastName, username, _id, profileImage }) =>
+            <div className='flex py-3 gap-3' key={_id}>
+              <div className="img shrink-0 h-12 w-12">
+                <img className='h-12 w-12 object-cover rounded-full' src={profileImage} alt="" />
               </div>
               <div className="flex justify-between grow items-start">
                 <div className="cursor-pointer"
