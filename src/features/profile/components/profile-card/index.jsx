@@ -14,12 +14,12 @@ export const ProfileCard = ({ userData, userPosts }) => {
     following,
     bio,
     link,
-    country
+    country, 
+    profileImage
   } = userData;
 
   const location = useLocation();
   const dispatch = useDispatch();
- // const { posts } = useSelector(getPostState);
   const { user, token } = useSelector(authState);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export const ProfileCard = ({ userData, userPosts }) => {
       <div className='flex flex-col w-full gap-2 p-5'>
         <div className='flex items-start'>
           <div className='h-24 w-24 sm:w-20 sm:h-20 shrink-0'>
-            <img className='object-cover rounded-full' src='https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/810/profiles/19338/profileImage/profile-square-extra-small.png' alt="" />
+            <img className='w-20 h-20 object-cover rounded-full' src={profileImage} alt="" />
           </div>
           {pathDetail === '/profile'
             ? <button className='btn-outline-primary ml-auto'
