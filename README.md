@@ -1,70 +1,128 @@
-# Getting Started with Create React App
+<h1 align="center">
+  <br />
+  <a href="https://capture-all.netlify.app">
+      <img src="https://user-images.githubusercontent.com/32593425/169646616-ae53eda0-9e02-455c-8b4c-12dc1966483e.png" alt="Capture" width="200"></a>
+  <br />
+  <br />
+  Capture
+</h1>
+<p align="center">Capture is a social media platform for sharing and exploring new people around.</p>
+<br />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+<img src="https://img.shields.io/badge/version-v1-green" align="center"/>
+<img src="https://img.shields.io/badge/label-open--source-blue" align="center"/>
+    <a href="https://app.netlify.com/sites/capture-all/deploys" align="center">
+        <img src="https://api.netlify.com/api/v1/badges/8b083945-912e-4f2d-90fd-9f8bcf06aeee/deploy-status" align="center"/>
+    </a>
+</div>
+<br />
 
-## Available Scripts
+<!-- TABLE OF CONTENTS -->
+<details>
+    <summary>Content</summary>
+    <ol>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#technology-languages-used">Technology/ Languages Used</a></li>
+        <li><a href="#how-to-run-locally">How to Run Locally</a></li>
+        <li><a href="#how-to-contribute">How to Contribute</a></li>
+        <li><a href="#social-links">Social Links</a></li>
+    </ol>
+</details>
 
-In the project directory, you can run:
+<br />
+<!-- FEATURES -->
 
-### `yarn start`
+## **FEATURES**
+Features 🚀 
+  - Authentication
+      - Signup
+      - Login & logout
+  - Feed with posts of user and other people user has followed 
+  - Explore with all the posts
+  - Add, edit and delete post
+  - Like/unlike, bookmark and comment post
+  - Edit user profile
+  - Follow and unfollow people in suggestions
+  - Search user
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## UI of Capture :
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<table>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/32593425/169646857-627d018f-0d2e-4d57-9ec2-e2ea23494cfc.png" alt="mockup" /></td>
+    <td><img src="https://user-images.githubusercontent.com/32593425/169646955-203b9955-fc49-4eb1-ad46-45273043d5a1.png" alt="mockups" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/32593425/169647021-61fad9a0-80ee-4f96-ba6d-7365892d46ea.png" alt="mockup" /></td>
+    <td><img src="https://user-images.githubusercontent.com/32593425/169647038-e7430021-4aa0-4575-986c-6bc00384e632.png" alt="mockups" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/32593425/169647077-ebea157a-1ffa-4fc5-b496-28549b1daae9.png" alt="mockup" /></td>
+    <td><img src="https://user-images.githubusercontent.com/32593425/169647141-c86fafc1-d945-4a05-b1fb-819779c9f87a.png" alt="mockups" /></td>
+  </tr>
+</table>
 
-### `yarn test`
+<br />
+<br />
+<!-- BUILT WITH -->
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🖥️ Tech Stack
+**Frontend:**
+<br />
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
+![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
+![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-### `yarn build`
+<br />
+<br />
+<!-- HOW TO RUN LOCALLY -->
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## **How to Run locally**
+- To run this project locally, use the following command in your CLI:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+  git clone https://github.com/shikhasingh1506/Capture.git
+```
+- Open your favorite code editor and run locally!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br />
+<br />
+<!-- CONTRIBUTING -->
 
-### `yarn eject`
+## **How to Contribute**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Contributions and ideas to this library are more than welcome! <br />
+If you want to contribute or have ideas for this project, just fork the repo and create a PR. If you spot a bug, you are more than welcome to open an issue! Do ⭐ this project! 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Contribution Guidelines
+1. Fork the Project
+2. Creata a branch for your feature/ idea. Please do give a good name for the branch that tells about the feature.
+3. Stage your changes
+4. Commit your changes
+5. Push the changes to your remote branch
+6. Open and Create a PR
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br />
+<br />
+<!-- SOCIAL LINKS -->
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## **Social Links**
+Let's connect and talk about development, music, books and much more 🌠! 
+> [GitHub Profile](https://github.com/shikhasingh1506) &nbsp;&middot;&nbsp; 
+> [LinkedIn Profile](https://www.linkedin.com/in/shikha-kumari-6a6b18169/) &nbsp;&middot;&nbsp;
+> [Twitter Profile](https://twitter.com/ShikhaK49176476) &nbsp;&middot;&nbsp;
+> [Hashnode Blogs](https://hashnode.com/@shikha15) &nbsp;&middot;&nbsp;
+<br />
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Check out my portfolio 🌐-
+> [Shikha Kumari](https://shikha.netlify.app/) 
+<hr />
+<p align="center">Copyright &copy; 2022 
+  <br />
+  <a href="https://shikha.netlify.app/">🚀 Shikha Kumari</a>
+</p>
