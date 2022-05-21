@@ -178,14 +178,11 @@ const postSlice = createSlice({
       state.postError = 'Error in get all posts';
     })
     builder.addCase(getPostByUsername.pending, (state) => {
-      state.postLoading = true;
     })
     builder.addCase(getPostByUsername.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.userPosts = payload;
     })
     builder.addCase(getPostByUsername.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in get user"s posts';
     })
     builder.addCase(addPost.pending, (state) => {
@@ -200,25 +197,19 @@ const postSlice = createSlice({
       state.postError = 'Error in adding post';
     })
     builder.addCase(editPost.pending, (state) => {
-      state.postLoading = true;
     })
     builder.addCase(editPost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(editPost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in editing post';
     })
     builder.addCase(deletePost.pending, (state) => {
-      state.postLoading = true;
     })
     builder.addCase(deletePost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(deletePost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in deleting post';
     })
     builder.addCase(likePost.fulfilled, (state, {payload}) => {
@@ -234,25 +225,19 @@ const postSlice = createSlice({
       state.postError = 'Error in disliking post';
     })
     builder.addCase(bookmarkPost.pending, (state) => {
-      state.postLoading = true;
     })
     builder.addCase(bookmarkPost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.bookmarks = payload;
     })
     builder.addCase(bookmarkPost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in add post to bookmark';
     })
     builder.addCase(removePostFromBookmark.pending, (state) => {
-      state.postLoading = true;
     })
     builder.addCase(removePostFromBookmark.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.bookmarks = payload;
     })
     builder.addCase(removePostFromBookmark.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in remove post from bookmark';
     })
     builder.addCase(getAllBookmarkPosts.pending, (state) => {
@@ -266,26 +251,12 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postError = 'Error in get bookmark post';
     }),
-    // builder.addCase(getPostComments.pending, (state) => {
-    //   state.postLoading = true;
-    // })
-    // builder.addCase(getPostComments.fulfilled, (state, {payload}) => {
-    //   state.postLoading = false;
-    //   state.bookmarks = payload;
-    // })
-    // builder.addCase(getPostComments.rejected, (state) => {
-    //   state.postLoading = false;
-    //   state.postError = 'Error in get bookmark post';
-    // }),
     builder.addCase(addCommentToPost.pending, (state) => {
-      state.postLoading = true;
     })
     builder.addCase(addCommentToPost.fulfilled, (state, {payload}) => {
-      state.postLoading = false;
       state.posts = payload;
     })
     builder.addCase(addCommentToPost.rejected, (state) => {
-      state.postLoading = false;
       state.postError = 'Error in adding commentes to post';
     })
     

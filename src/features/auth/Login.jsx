@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "features";
 import { useNavigate, Link } from "react-router-dom";
+import {useToast} from 'custom-hooks/useToast';
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {showToast} = useToast();
   const token = useSelector(state=> state.auth.token);
   const initialFormState={
     username: "",
@@ -32,9 +34,20 @@ export const Login = () => {
 
   const loginFormHandler = async (e, loginForm) => {
     e.preventDefault();
-    await dispatch(loginUser(loginForm));
+    try{
+    const response = await dispatch(loginUser(loginForm));
+    if(response?.error){
+      if(response.payload.includes('404'))
+        throw new Error('User not found!');
+      throw new Error('Invalid credentials');
+    }
     setLoginCreds(initialFormState);
     navigate("/"); 
+    showToast('Login Successful', 'success');
+    }catch(error){
+      console.log(error.message);
+      showToast(error.message, 'error');
+    }
   }
   return (
     <div className="h-screen flex justify-center items-center">

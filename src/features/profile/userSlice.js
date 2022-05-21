@@ -7,6 +7,7 @@ const initialState = {
   allUsers: [],
   userStatus: "",
   notFollowing: [],
+  gloablLoader: false
 };
 
 export const getAllUser = createAsyncThunk(
@@ -38,7 +39,14 @@ export const followUnfollowUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    showLoader: (state) => {
+      state.gloablLoader = true;
+    },
+    hideLoader: (state) => {
+      state.gloablLoader = false;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllUser.pending, state => {
       state.userLoading = true
@@ -72,3 +80,4 @@ const userSlice = createSlice({
 
 export const userState = (state) => state.users;
 export const userReducer = userSlice.reducer;
+export const { showLoader, hideLoader } = userSlice.actions;

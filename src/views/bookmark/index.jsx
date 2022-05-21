@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { getPostState, authState, getAllBookmarkPosts, } from 'features';
 import { useEffect } from "react";
 import { PostCard } from 'features/post/components';
+import { Loader } from 'component';
 
 export const Bookmark = () => {
   const dispatch = useDispatch();
@@ -24,21 +25,23 @@ export const Bookmark = () => {
   const bookmarkPosts = posts.filter(post => bookmarks.includes(post._id));
   return (
     <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 md:w-full items-start">
-      {bookmarkPosts?.length > 0
-        ? bookmarkPosts.map(
-          (post) => {
-            return (
-              post.username === user?.username
-                ? <PostCard key={post._id} post={post} dialogOption={true} />
-                : <PostCard key={post._id} post={post} />
+      {
+        postLoading
+          ? <Loader />
+          : bookmarkPosts?.length > 0
+            ? bookmarkPosts.map(
+              (post) => {
+                return (
+                  post.username === user?.username
+                    ? <PostCard key={post._id} post={post} dialogOption={true} />
+                    : <PostCard key={post._id} post={post} />
+                )
+              }
             )
-          }
-        )
-        : <div className='self-center'>
-             <img src={nodatasvg} alt="Loader" className='h-96 w-96'/>
-        </div>
-          
-        }
+            : <div className='self-center'>
+              <img src={nodatasvg} alt="Loader" className='h-96 w-96' />
+            </div>
+      }
     </div>
   )
 }

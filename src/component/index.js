@@ -3,3 +3,4 @@ export { Menubar } from './menu-bar';
 export { Suggestions } from './suggestions';
 export { Container } from './container';
 export { PostMoreModal } from './post-more-modal';
+export { Loader } from './loader';
