@@ -69,7 +69,7 @@ const PostForm = ({ modal }) => {
           <img className='w-14 h-14 object-cover rounded-full' src={profileImage} alt="" />
         </div>
         <form className='flex flex-col w-full gap-2.5' onSubmit={addPostHandler}>
-          <textarea className='resize-none overflow-y-auto h-24 md:h-16 px-4 py-2 focus:outline-none border-none'
+          <textarea className='resize-none overflow-y-auto px-4 py-2 focus:outline-none border-none'
             name="content"
             id=""
             value={content}

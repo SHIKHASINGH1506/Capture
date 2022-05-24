@@ -15,6 +15,7 @@ export const PostCard = ({ post, dialogOption }) => {
   const { bookmarks } = useSelector(getPostState);
   const { allUsers } = useSelector(userState);
   const [comment, setComment] = useState("");
+  const [showMoreComments, setShowMoreComments] = useState(false);
   const {
     loadingState: {
       likeLoading,
@@ -171,9 +172,22 @@ export const PostCard = ({ post, dialogOption }) => {
           </form>
         </div>
         <div>
-          {sortedCommentList.length > 0 && <div className="comment-list">
-            {sortedCommentList.map(comment => <CommentList key={comment._id} comment={comment} />)}
-          </div>}
+          {sortedCommentList.length > 0 &&
+            <div className="comment-list">
+              {sortedCommentList.length > 2
+                ? showMoreComments
+                    ? sortedCommentList.map(comment => <CommentList key={comment._id} comment={comment} />)
+                    : sortedCommentList.slice(0, 2).map(comment => <CommentList key={comment._id} comment={comment} />)
+                : sortedCommentList.map(comment => <CommentList key={comment._id} comment={comment} />)
+              }
+              {sortedCommentList.length > 2
+                ? showMoreComments
+                    ? <button className='text-xs underline' onClick={() => setShowMoreComments(false)}>Hide comments</button>
+                    : <button className='text-xs underline' onClick={() => setShowMoreComments(true)}>View more comments</button>
+                : ''
+              }
+            </div>
+          }
         </div>
       </div>
     </>
