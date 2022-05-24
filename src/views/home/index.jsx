@@ -10,6 +10,7 @@ const Home = () => {
   const { posts, postLoading } = useSelector(getPostState);
   const { user } = useSelector(authState);
   const [userFeedPost, setUserFeedPost] = useState([]);
+  const [isTrending, setIsTrending] = useState(false);
 
   useEffect(() => {
     if (posts) {
@@ -25,13 +26,36 @@ const Home = () => {
     }
   }, [user, posts]);
 
+  const getFilteredPosts = () => {
+    if (isTrending)
+      return [...posts]
+      ?.sort((postA, postB) => postB.likes.likeCount - postA.likes.likeCount)
+      .filter(post => post.likes.likeCount>0)
+    else {
+      return posts
+        ?.filter(
+          (post) =>
+            post?.username === user?.username ||
+            user?.following?.find((ele) => post?.username === ele?.username)
+        )
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    }
+  }
+
+  const filteredPosts = getFilteredPosts();
+
   return (
     <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 sm:px-0 md:w-full items-start">
       <PostForm />
+      <div className='w-full p-2 flex gap-4 bg-white justify-around'>
+        <button className='w-1/2 border-r-2 border-purple-700 mr-2 hover:icon-hover' onClick={() => setIsTrending(true)}><i className="fa-solid fa-fire"></i> Trending Posts</button>
+        <button className='w-1/2 hover:icon-hover' onClick={() => setIsTrending(false)}>
+        <i class="fa-solid fa-sort mr-2"></i>Latest Posts</button>
+      </div>
       {postLoading
         ? <Loader />
-        : userFeedPost?.length > 0
-          ? userFeedPost.map(
+        : filteredPosts?.length > 0
+          ? filteredPosts.map(
             (post) => {
               return (
                 post.username === user?.username
