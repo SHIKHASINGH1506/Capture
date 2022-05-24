@@ -182,8 +182,8 @@ export const PostCard = ({ post, dialogOption }) => {
               }
               {sortedCommentList.length > 2
                 ? showMoreComments
-                    ? <button className='text-xs' onClick={() => setShowMoreComments(false)}>Hide comments</button>
-                    : <button className='text-xs' onClick={() => setShowMoreComments(true)}>View more comments</button>
+                    ? <button className='text-xs underline' onClick={() => setShowMoreComments(false)}>Hide comments</button>
+                    : <button className='text-xs underline' onClick={() => setShowMoreComments(true)}>View more comments</button>
                 : ''
               }
             </div>
