@@ -1,4 +1,5 @@
-import { authState, updateUser, closeEditProfileModal, setEditProfileData } from 'features';
+import { authState, updateUser } from 'features';
+import { closeModal, setPostFields } from 'features';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useToast } from 'custom-hooks/useToast';
@@ -41,8 +42,8 @@ export const EditProfileForm = () => {
       const response = await dispatch(updateUser({ token, profileData }));
       if (response?.error)
         throw new Error('Error in updating user profile');
-      dispatch(setEditProfileData({}));
-      dispatch(closeEditProfileModal());
+      dispatch(setPostFields({}));
+      dispatch(closeModal());
       showToast('Profile updated successfully', 'success');
     } catch (error) {
       console.log(error.message);
@@ -79,8 +80,6 @@ export const EditProfileForm = () => {
       }
       );
   };
-
-  console.log(profileData);
 
   return (
     <div className="flex bg-base-purple p-4">

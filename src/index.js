@@ -6,8 +6,7 @@ import { makeServer } from "./server";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { store } from "./store";
-import { PostModalPortal } from 'PostModalPortal';
-import { EditProfileModalPortal } from 'EditProfileModalPortal';
+import { ModalPortal } from 'ModalPortal';
 
 // Call make Server
 makeServer();
@@ -17,8 +16,7 @@ ReactDOM.render(
     <Router>
       <Provider store={store}>
         <App />
-        <PostModalPortal />
-        <EditProfileModalPortal />
+        <ModalPortal />
       </Provider>
     </Router>
   </React.StrictMode>,

@@ -1,19 +1,18 @@
-import logo from 'assets/logo2.png';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authState, addPost, editPost, deletePost, postModalState, closePostModal, setEditPostData } from 'features';
+import { authState, addPost, editPost } from 'features';
+import { closeModal, setPostFields, modalState } from 'features';
 import { useToast } from 'custom-hooks/useToast';
 
 const PostForm = ({ modal }) => {
   const dispatch = useDispatch();
-  const { isPostModalOpen, postToEdit } = useSelector(postModalState);
+  const { postToEdit } = useSelector(modalState);
   const { showToast } = useToast();
   const {user:{profileImage}} = useSelector(authState);
 
   const initialPostFields = {
     content: '',
   }
-
   const isEditPost = !modal
     ? false
     : Object.keys(postToEdit).length > 0
@@ -32,7 +31,7 @@ const PostForm = ({ modal }) => {
           throw new Error('Error in adding post');
         showToast('Post added successfully', 'success');
         setPostData(initialPostFields);
-        dispatch(closePostModal(false));
+        dispatch(closeModal(false));
       } catch (err) {
         showToast('Error in adding post', 'error');
         console.log(err.message);
@@ -44,8 +43,8 @@ const PostForm = ({ modal }) => {
           throw new Error('Error in updating post'); 
         showToast('Post edited successfully', 'success');
         setPostData(initialPostFields);
-        dispatch(closePostModal(false));
-        dispatch(setEditPostData({}));
+        dispatch(closeModal(false));
+        dispatch(setPostFields({}));
       }catch(err){
         showToast('Error in editing post', 'error');
         console.log(err.message);

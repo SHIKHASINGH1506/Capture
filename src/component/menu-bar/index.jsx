@@ -1,16 +1,13 @@
 import './menu-bar.css';
 import logo from 'assets/logo2.png';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from 'features';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import { postModalState, openPostModal } from 'features';
-import { useState } from 'react';
+import { openModal } from 'features';
 
 export const Menubar = () => {
   const dispatch = useDispatch();
-  const {isPostModalOpen} = useSelector(postModalState);
-  const [newPostModal, setNewPostModal] = useState(false);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -56,10 +53,6 @@ export const Menubar = () => {
       )
     })
 
-  const modalVisibilityHandler = (modalState) => {
-    setNewPostModal(modalState);
-  }
-
   return (
     <>
     <aside className='menu px-5 flex flex-col justify-between'>
@@ -81,7 +74,7 @@ export const Menubar = () => {
         </ul>
         <div className="w-full md:hidden">
           <button className='my-6 w-full py-2.5 rounded-full text-white bg-purple-700 hover:bg-purple-600'
-          onClick={() => dispatch(openPostModal(true))}>Add Post</button>
+          onClick={() => dispatch(openModal('post-form'))}>Add Post</button>
         </div>
       </div>
     </aside>

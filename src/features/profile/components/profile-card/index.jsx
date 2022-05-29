@@ -1,5 +1,5 @@
-import { authState, openEditProfileModal, setEditProfileData, followUnfollowUser } from 'features';
-import { getPostState } from 'features/post/postSlice';
+import { authState, followUnfollowUser } from 'features';
+import { openModal, setPostFields } from 'features';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
@@ -29,8 +29,8 @@ export const ProfileCard = ({ userData, userPosts }) => {
   )
 
   const editModalHandler = () => {
-    dispatch(openEditProfileModal());
-    dispatch(setEditProfileData(user));
+    dispatch(openModal('profile-form'));
+    dispatch(setPostFields(user));
   }
   
   const pathDetail = location.pathname;

@@ -1,4 +1,5 @@
-import { openPostModal, setEditPostData, deletePost } from 'features';
+import { deletePost } from 'features';
+import { openModal, setPostFields } from 'features';
 import { useDispatch } from 'react-redux';
 import {useToast} from 'custom-hooks/useToast'
 
@@ -7,8 +8,8 @@ export const PostMoreModal = ({postData, optionHandler}) => {
   const {showToast} = useToast();
 
   const openEditModal = () => {
-    dispatch(openPostModal(true));
-    dispatch(setEditPostData(postData));
+    dispatch(openModal('post-form'));
+    dispatch(setPostFields(postData));
     optionHandler();
   }
 
