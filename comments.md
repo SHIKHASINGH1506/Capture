@@ -5,5 +5,3 @@
 <li>Added debounce in search</li>
 <li>Added functionality to add images in post</li>
 </ol>
-<li>Refactored code to utilize same modal for add post, edit post, profile edit</li>
-</ol>
