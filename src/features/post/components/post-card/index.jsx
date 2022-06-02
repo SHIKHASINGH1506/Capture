@@ -10,7 +10,6 @@ import { useEffect } from "react";
 export const PostCard = ({ post, dialogOption }) => {
   const dispatch = useDispatch();
   const { showToast } = useToast();
-
   const { user, token } = useSelector(authState);
   const { bookmarks } = useSelector(getPostState);
   const { allUsers } = useSelector(userState);
@@ -29,6 +28,7 @@ export const PostCard = ({ post, dialogOption }) => {
     fullname,
     username,
     content,
+    postImage,
     likes: { likedBy, likeCount },
     comments
   } = post;
@@ -132,6 +132,9 @@ export const PostCard = ({ post, dialogOption }) => {
             </div>
             <div className='overflow-hidden'>
               {content}
+            </div>
+            <div>
+              <img src={postImage} alt="" className='w-full max-h-[400px]' />
             </div>
             <div className='flex justify-between relative'>
               <button

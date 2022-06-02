@@ -16,10 +16,10 @@ const modalSlice = createSlice({
     },
     closeModal: (state) => {
       state.isModalOpen = false;
+      state.modalChildren = null;
       state.postToEdit={};
     },
     setPostFields: (state, action) => {
-      console.log(action.payload);
       state.postToEdit = action.payload;
     }
   }

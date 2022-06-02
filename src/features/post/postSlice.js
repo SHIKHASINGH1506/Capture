@@ -36,9 +36,9 @@ export const addPost = createAsyncThunk(
 
 export const editPost = createAsyncThunk(
   'post/editPost',
-  async (postData, {rejectWithValue})  => {
+  async ({id, postData}, {rejectWithValue})  => {
     try{
-      const {data} = await editPostService(postData?._id, postData);
+      const {data} = await editPostService(id, postData);
       return data.posts;
     }catch(err){
       console.log(err.message);

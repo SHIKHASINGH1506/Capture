@@ -11,12 +11,12 @@ const getPostsByUsernameService = async (token, username) => {
 
 const addPostService =  async (postData) => {
   const token = localStorage.getItem('token');
-  return await axios.post('/api/posts', {postData: postData}, {headers: {authorization: token}});
+  return await axios.post('/api/posts', postData, {headers: {authorization: token}});
 }
 
 const editPostService = async (postId, postData) => {
   const token = localStorage.getItem('token');
-  return await axios.post(`/api/posts/edit/${postId}`, {postData: postData}, {headers: {authorization: token}});
+  return await axios.post(`/api/posts/edit/${postId}`, postData, {headers: {authorization: token}});
 }
 
 const deletePostService = async (postId) => {
