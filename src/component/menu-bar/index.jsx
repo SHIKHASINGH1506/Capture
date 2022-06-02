@@ -72,10 +72,6 @@ export const Menubar = () => {
             </div>
           </div>
         </ul>
-        <div className="w-full md:hidden">
-          <button className='my-6 w-full py-2.5 rounded-full text-white bg-purple-700 hover:bg-purple-600'
-          onClick={() => dispatch(openModal('post-form'))}>Add Post</button>
-        </div>
       </div>
     </aside>
     <footer className='hidden bg-white px-5 mr-6 flex flex-col justify-between md:block md:fixed md:bottom-0 md:left-0 md:w-full'>
