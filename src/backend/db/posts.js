@@ -10,6 +10,33 @@ export const posts = [
   {
     _id: uuid(),
     content:
+      "New wallpaper these days!",
+    postImage: 'https://res.cloudinary.com/ddbguqhts/image/upload/v1654577359/zzi3fhcunlxsvvc3xwcg.jpg',
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "shikhasingh",
+    fullname: 'Shikha Singh',
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "johndoe",
+        text: "Looks soothing!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+        createdAt: "2022-06-07T02:38:12+05:30",
+      },
+    ]
+  },
+  {
+    _id: uuid(),
+    content:
       "Joining neogCamp is my best decision so far. Looking back I can only be grateful.",
     likes: {
       likeCount: 0,
