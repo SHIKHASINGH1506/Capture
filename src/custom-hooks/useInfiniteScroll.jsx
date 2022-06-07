@@ -12,7 +12,6 @@ const useInfiniteScroll = (posts) => {
   const handleObserver = (entries) => {
     const [target] = entries;
     if (target.isIntersecting && hasMorePosts) {
-      console.log(entries);
       setLoading(true);
       interval = setTimeout(() => {
         setPageNumber((prevPageNumber) => prevPageNumber + 1);

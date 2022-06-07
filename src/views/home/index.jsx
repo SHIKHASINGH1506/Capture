@@ -48,7 +48,6 @@ const Home = () => {
   }, [user, posts]);
 
   const postsToDisplay = filteredPosts?.slice(0, pageNumber * 3);
-  console.log(postsToDisplay);
   return (
     <div className="flex flex-col gap-6 w-2/4 lg:grow px-5 sm:px-0 md:w-full items-start">
       <PostForm />
